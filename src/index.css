@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* Tailwind v4 : la palette et les fonts sont déclarées comme tokens de thème.
+   Chaque token --color-X génère les utilitaires bg-X, text-X et border-X
+   (ink, sand, water, gold). */
+@theme {
+  --color-ink: #0f1b2d;   /* fond sombre principal / texte sur fond clair */
+  --color-sand: #f4ebd9;  /* fond clair / texte sur fond sombre */
+  --color-water: #2e6f8e; /* accent eau */
+  --color-gold: #d9c5a0;  /* accent sable doré */
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-sand);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-water);
+    color: var(--color-sand);
+  }
+}
+
+/* Fraunces est variable : on active l'optical sizing automatique et les ligatures
+   pour un rendu typographique éditorial sur les titres. */
+.font-fraunces {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-feature-settings: "liga" 1, "dlig" 1;
+}
+
+/* Duotone éditorial : la photo est remappée sur deux tons de la palette
+   (ombres -> encre, hautes lumières -> sable) via le filtre SVG #duotone-mickael
+   défini dans Hero.tsx. Le mur gris devient sable, la photo vit dans la palette. */
+.duotone {
+  filter: url(#duotone-mickael) contrast(1.08) brightness(0.95);
+}
+
+/* Grain plein écran : texture filmique discrète qui casse l'aspect "plastique".
+   feTurbulence en data-URI, posé au-dessus de tout, sans interaction. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
