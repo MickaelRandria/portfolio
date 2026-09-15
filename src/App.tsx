@@ -10,6 +10,7 @@ import Audit from './components/Audit'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AlohaImmo from './pages/AlohaImmo'
+import PrestigeRentEmmy from './pages/PrestigeRentEmmy'
 
 function Portfolio() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/pour-aloha-immo" element={<AlohaImmo />} />
+        <Route path="/pour-emmy-prestigerent" element={<PrestigeRentEmmy />} />
       </Routes>
       {/* Grain filmique global, au-dessus du contenu, non interactif */}
       <div className="grain" aria-hidden="true" />
