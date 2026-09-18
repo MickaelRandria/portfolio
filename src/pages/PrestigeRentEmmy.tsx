@@ -295,7 +295,10 @@ function HeuresChart() {
 }
 
 /** Barres verticales : total du projet selon les 3 TJM (bas plein, haut clair). */
-function TjmChart() {
+function TjmChart({ selectedRate, onSelect }: {
+  selectedRate: typeof TJMS[number]
+  onSelect: (rate: typeof TJMS[number]) => void
+}) {
   const ref     = useRef<HTMLDivElement>(null)
   const inView  = useInView(ref, { once: true, amount: 0.4 })
   const reduced = useReducedMotion()
@@ -321,33 +324,39 @@ function TjmChart() {
       >
         {TJMS.map((t, i) => {
           const active = hover === t.id
-          const dimmed = hover !== null && !active
+          const selected = selectedRate.id === t.id
+          const dimmed = hover !== null && !active && !selected
           return (
-            <div
+            <button
               key={t.id}
-              className={`relative flex flex-col rounded-sm border px-2 pb-4 pt-8 transition-opacity duration-150 sm:px-4 ${
-                t.mine ? 'border-2 bg-white/40' : 'border-ink/10'
+              type="button"
+              aria-pressed={selected}
+              aria-label={`Choisir ${t.sub}, ${t.tjm}, budget de ${t.low} à ${t.high} euros`}
+              className={`relative flex min-w-0 cursor-pointer flex-col rounded-sm border-2 px-2 pb-4 pt-8 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-water motion-reduce:transition-none sm:px-4 ${
+                selected ? 'bg-white/40' : 'border-ink/10 hover:bg-white/20'
               }`}
               style={{
-                borderColor: t.mine ? barColor : undefined,
+                borderColor: selected ? barColor : undefined,
                 opacity: dimmed ? 0.5 : 1,
               }}
               onMouseEnter={() => setHover(t.id)}
-              onClick={() => setHover(active ? null : t.id)}
+              onFocus={() => setHover(t.id)}
+              onBlur={() => setHover(null)}
+              onClick={() => onSelect(t)}
             >
-              {t.mine && (
+              {selected && (
                 <span
                   className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white sm:text-[11px]"
                   style={{ backgroundColor: barColor }}
                 >
-                  Ton tarif
+                  Sélectionné
                 </span>
               )}
 
               {/* Valeur */}
               <p
                 className={`text-center tabular-nums leading-tight text-ink ${
-                  t.mine ? 'font-bold' : 'font-semibold'
+                  selected ? 'font-bold' : 'font-semibold'
                 } text-[12px] sm:text-[15px]`}
               >
                 {euro(t.low)}
@@ -389,17 +398,235 @@ function TjmChart() {
               <div className="h-px w-full bg-ink/20" aria-hidden="true" />
 
               {/* Libellés */}
-              <p className={`mt-3 text-center tabular-nums text-ink ${t.mine ? 'font-bold' : 'font-medium'} text-[13px] sm:text-[15px]`}>
+              <p className={`mt-3 w-full text-center tabular-nums text-ink ${selected ? 'font-bold' : 'font-medium'} text-[13px] sm:text-[15px]`}>
                 {t.tjm}
               </p>
-              <p className="mt-0.5 text-center text-[11px] text-ink/55 sm:text-[12px]">
+              <p className="mt-0.5 w-full text-center text-[11px] text-ink/55 sm:text-[12px]">
                 {t.sub}
               </p>
-            </div>
+            </button>
           )
         })}
       </div>
+      <p className="mt-5 text-sm text-ink/70" aria-live="polite">
+        {selectedRate.sub} sélectionné ·{' '}
+        <a href="#paiements" className="underline underline-offset-4 hover:text-water focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-water">Voir mon échéancier</a>
+      </p>
     </div>
+  )
+}
+
+const paymentCurrency = new Intl.NumberFormat('fr-FR', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+})
+
+function paymentSchedule(total: number, count: number, firstAmount: number | null) {
+  const cents = Math.round(total * 100)
+  if (count === 1) return [cents]
+  const first = firstAmount === null
+    ? Math.floor(cents / count)
+    : Math.round(firstAmount * 100)
+  const following = Math.floor((cents - first) / (count - 1))
+  const remainder = (cents - first) % (count - 1)
+  return Array.from({ length: count }, (_, index) =>
+    index === 0 ? first : following + (index >= count - remainder ? 1 : 0),
+  )
+}
+
+function PaymentSimulator({ selectedRate }: { selectedRate: typeof TJMS[number] }) {
+  const [countInput, setCountInput] = useState('3')
+  const [morePayments, setMorePayments] = useState(false)
+  const [customFirst, setCustomFirst] = useState(false)
+  const [firstInput, setFirstInput] = useState('200')
+  const [visibleCount, setVisibleCount] = useState(12)
+  const isReduced = useReducedMotion()
+  const count = Number(countInput)
+  const firstAmount = Number(firstInput.replace(',', '.'))
+  const maxCount = selectedRate.low * 100
+  const countValid = /^\d+$/.test(countInput) && Number.isSafeInteger(count) && count >= (morePayments ? 6 : 1) && count <= maxCount
+  const maxFirst = (selectedRate.low * 100 - (count - 1)) / 100
+  const firstValid = count === 1 || !customFirst || (
+    /^\d+([.,]\d{1,2})?$/.test(firstInput) && firstAmount >= 0.01 && firstAmount <= maxFirst
+  )
+  const valid = countValid && firstValid
+  const low = valid ? paymentSchedule(selectedRate.low, count, customFirst ? firstAmount : null) : []
+  const high = valid ? paymentSchedule(selectedRate.high, count, customFirst ? firstAmount : null) : []
+  const formatRange = (min: number, max: number) =>
+    min === max ? paymentCurrency.format(min / 100)
+      : `${paymentCurrency.format(min / 100)} à ${paymentCurrency.format(max / 100)}`
+
+  return (
+    <section id="paiements" aria-labelledby="paiements-titre" className="mt-16 scroll-mt-28 overflow-hidden rounded-sm border border-ink/15">
+      <div className="grid lg:grid-cols-[1fr_1.1fr]">
+        <div className="p-6 sm:p-9">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-water">Simuler ton paiement</p>
+          <h3 id="paiements-titre" className="font-fraunces mt-4 text-3xl font-semibold leading-tight text-ink sm:text-4xl">
+            À ton <span className="italic">rythme.</span>
+          </h3>
+          <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink/70">
+            Choisis comment répartir ton budget et visualise chaque versement.
+            Le montant total reste le même.
+          </p>
+
+          <fieldset className="mt-8">
+            <legend className="mb-3 text-sm font-medium text-ink">Nombre de versements</legend>
+            <div className="grid grid-cols-5 gap-2">
+              {[1, 2, 3, 4, 5].map((option) => (
+                <label key={option} className="relative min-w-0 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="payment-count"
+                    value={option}
+                    checked={!morePayments && count === option}
+                    onChange={() => { setCountInput(String(option)); setMorePayments(false); setVisibleCount(12) }}
+                    className="peer sr-only"
+                  />
+                  <span className="relative flex min-h-20 flex-col items-center justify-center rounded-sm border border-ink/20 text-ink transition-colors duration-200 hover:border-water peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-water motion-reduce:transition-none">
+                    {!morePayments && count === option && (
+                      <motion.span
+                        layoutId="payment-choice"
+                        className="absolute inset-0 rounded-sm bg-ink"
+                        transition={{ duration: isReduced ? 0 : 0.25, ease: EASE }}
+                      />
+                    )}
+                    <span className={`relative text-xl font-semibold tabular-nums ${!morePayments && count === option ? 'text-sand' : ''}`}>{option}</span>
+                    <span className={`relative mt-1 text-xs ${!morePayments && count === option ? 'text-sand/75' : 'text-ink/65'}`}>fois</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-expanded={morePayments}
+              aria-controls="payment-more"
+              onClick={() => { setMorePayments(!morePayments); setCountInput(morePayments ? '5' : '6'); setVisibleCount(12) }}
+              className="mt-2 min-h-11 text-left text-xs text-ink/70 underline decoration-ink/35 underline-offset-4 transition-colors hover:text-water focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-water motion-reduce:transition-none"
+            >
+              {morePayments ? 'Revenir aux paiements en 1 à 5 fois' : 'Échelonner davantage'}
+            </button>
+            <div id="payment-more">
+              {morePayments && (
+                <motion.div initial={{ opacity: isReduced ? 1 : 0, y: isReduced ? 0 : -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: isReduced ? 0 : 0.25 }} className="mt-3">
+                  <label htmlFor="payment-count" className="mb-3 block text-sm font-medium text-ink">Combien de versements souhaites-tu ?</label>
+                  <input
+                    id="payment-count"
+                    type="number"
+                    inputMode="numeric"
+                    min={6}
+                    max={maxCount}
+                    step={1}
+                    value={countInput}
+                    onChange={(event) => { setCountInput(event.target.value); setVisibleCount(12) }}
+                    aria-invalid={!countValid}
+                    aria-describedby="payment-count-help"
+                    className="min-h-14 w-full rounded-sm border border-ink/25 bg-transparent px-4 text-lg tabular-nums text-ink focus:border-water focus:outline-2 focus:outline-offset-2 focus:outline-water"
+                  />
+                  <p id="payment-count-help" className={`mt-2 text-xs leading-relaxed ${countValid ? 'text-ink/60' : 'text-[#8e2f48]'}`}>
+                    {countValid ? 'Saisis le nombre souhaité, premier versement compris : 6, 12…' : `Saisis un nombre entier de 6 à ${maxCount.toLocaleString('fr-FR')}, pour conserver au moins 0,01 € par versement.`}
+                  </p>
+                </motion.div>
+              )}
+            </div>
+          </fieldset>
+
+          <div className="mt-6 min-h-36">
+            <label className={`flex min-h-11 items-center gap-3 text-sm ${count === 1 ? 'text-ink/45' : 'cursor-pointer text-ink'}`}>
+              <input
+                type="checkbox"
+                checked={customFirst}
+                disabled={count === 1}
+                onChange={(event) => setCustomFirst(event.target.checked)}
+                className="h-4 w-4 accent-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-water"
+              />
+              Ajuster le premier versement
+            </label>
+            {countValid && count > 1 && customFirst ? (
+              <motion.div initial={{ opacity: isReduced ? 1 : 0 }} animate={{ opacity: 1 }} transition={{ duration: isReduced ? 0 : 0.2 }} className="mt-3">
+                <div className="flex items-center justify-between gap-4 text-sm text-ink">
+                  <label htmlFor="payment-first">Montant du premier versement (€)</label>
+                </div>
+                <input
+                  id="payment-first"
+                  type="text"
+                  inputMode="decimal"
+                  value={firstInput}
+                  onChange={(event) => setFirstInput(event.target.value)}
+                  aria-invalid={!firstValid}
+                  aria-describedby="payment-first-help"
+                  className="mt-3 min-h-14 w-full rounded-sm border border-ink/25 bg-transparent px-4 text-lg tabular-nums text-ink focus:border-water focus:outline-2 focus:outline-offset-2 focus:outline-water"
+                />
+                <p id="payment-first-help" className={`mt-2 text-xs leading-relaxed ${firstValid ? 'text-ink/60' : 'text-[#8e2f48]'}`}>
+                  {firstValid
+                    ? `Le reste est réparti sur ${count - 1} ${count === 2 ? 'versement' : 'versements'}. Le premier montant est identique dans les deux estimations.`
+                    : `Saisis un montant entre 0,01 € et ${paymentCurrency.format(maxFirst)}, avec deux décimales maximum, pour conserver au moins 0,01 € sur les versements suivants dès l’estimation basse.`}
+                </p>
+              </motion.div>
+            ) : (
+              <p className="mt-3 text-[13px] leading-relaxed text-ink/60">
+                {count === 1 ? 'Le budget est réglé en un seul versement.' : 'Des versements égaux, avec un ajustement au centime sur les derniers si nécessaire.'}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-ink p-6 text-sand sm:p-9">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-gold">Ton échéancier estimé</p>
+            <span className="rounded-full border border-gold/30 px-3 py-1 text-xs text-gold">{selectedRate.sub} · {selectedRate.tjm}</span>
+          </div>
+          <p className="font-fraunces mt-5 text-3xl font-semibold tabular-nums sm:text-4xl">
+            {formatRange(selectedRate.low * 100, selectedRate.high * 100)}
+          </p>
+          <p className="mt-2 text-sm text-sand/65">Budget total estimé · projet complet</p>
+
+          <div className="mt-7 flex h-2 overflow-hidden rounded-full" aria-hidden="true">
+            {(valid ? [low[0], selectedRate.low * 100 - low[0]] : []).map((amount, index) => (
+              <motion.div
+                key={index}
+                initial={false}
+                animate={{ width: `${amount / (selectedRate.low * 100) * 100}%` }}
+                transition={{ duration: isReduced ? 0 : 0.3, ease: EASE }}
+                className={index === 0 ? 'bg-gold' : 'bg-sand/35'}
+              />
+            ))}
+          </div>
+          <div aria-live="polite" aria-atomic="true" className="mt-4 min-h-60">
+            {!valid && <p className="py-6 text-sm leading-relaxed text-sand/75">Complète les champs avec des valeurs valides pour afficher ton échéancier.</p>}
+            {valid && <p className="pt-2 text-xs text-sand/65">{count} {count === 1 ? 'versement' : 'versements'} au total</p>}
+            <ol>
+              {low.slice(0, visibleCount).map((amount, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: isReduced ? 1 : 0, y: isReduced ? 0 : 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: isReduced ? 0 : 0.25 }}
+                  className="flex min-h-20 items-center justify-between gap-3 border-b border-sand/15 py-4"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold/35 text-xs text-gold" aria-hidden="true">{index + 1}</span>
+                    <span className="text-sm text-sand/75">{index === 0 ? 'Premier versement' : `${index + 1}e versement`}</span>
+                  </div>
+                  <span className="text-right text-sm font-semibold tabular-nums sm:text-base">{formatRange(amount, high[index])}</span>
+                </motion.li>
+              ))}
+            </ol>
+            {valid && count > visibleCount && (
+              <button type="button" onClick={() => setVisibleCount((current) => current + 12)} className="mt-4 min-h-11 rounded-sm border border-gold/40 px-4 text-sm text-gold transition-colors hover:bg-gold/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold motion-reduce:transition-none">
+                Voir les {Math.min(12, count - visibleCount)} versements suivants ({visibleCount} sur {count})
+              </button>
+            )}
+            <p className="sr-only">{selectedRate.sub}. Total estimé : {formatRange(selectedRate.low * 100, selectedRate.high * 100)}.</p>
+          </div>
+          <p className="mt-5 text-xs leading-relaxed text-sand/60">
+            Une première projection pour en discuter ensemble. Le montant définitif,
+            les dates et les modalités seront convenus ensemble.
+          </p>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -407,6 +634,7 @@ function TjmChart() {
 
 export default function PrestigeRentEmmy() {
   const isReduced = useReducedMotion()
+  const [selectedRate, setSelectedRate] = useState<typeof TJMS[number]>(TJMS[2])
 
   useEffect(() => {
     document.title = 'Pour Emmy · PrestigeRent · Mickael'
@@ -610,9 +838,9 @@ export default function PrestigeRentEmmy() {
                   Le total selon le tarif journalier
                 </figcaption>
                 <p className="mb-6 mt-1 text-[14px] text-ink/60">
-                  Même travail, même temps : seul le TJM change.
+                  Clique sur un tarif pour l'appliquer au simulateur de paiement.
                 </p>
-                <TjmChart />
+                <TjmChart selectedRate={selectedRate} onSelect={setSelectedRate} />
               </motion.figure>
             </div>
 
@@ -694,6 +922,7 @@ export default function PrestigeRentEmmy() {
                 séparément, d'où un écart possible d'1€ entre la somme des lignes et le total.
               </p>
             </motion.div>
+            <PaymentSimulator selectedRate={selectedRate} />
           </div>
         </section>
 
