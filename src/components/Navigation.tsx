@@ -5,6 +5,7 @@ import { EASE } from '../lib/motion'
 
 const LINKS = [
   { label: 'Réalisations', href: '#realisations' },
+  { label: 'Lab IA', href: '#lab' },
   { label: 'Approche', href: '#approche' },
   { label: 'Contact', href: '#contact' },
 ] as const

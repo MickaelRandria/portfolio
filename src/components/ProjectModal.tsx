@@ -14,6 +14,8 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { EASE } from '../lib/motion'
 import type { Project } from '../data/projects'
+import MediaPlaceholder from './MediaPlaceholder'
+import PipelineSteps from './PipelineSteps'
 
 /** Icônes décoratives cyclées sur les sous-sections de "Ma réponse". */
 const APPROACH_ICONS: LucideIcon[] = [Layers, Sparkles, Compass, Feather]
@@ -162,6 +164,9 @@ export default function ProjectModal({
               <header>
                 <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold">
                   {project.badge}
+                  {project.status && (
+                    <span className="text-sand/50"> · {project.status}</span>
+                  )}
                 </p>
                 <h2
                   id={TITLE_ID}
@@ -174,19 +179,26 @@ export default function ProjectModal({
                   {project.shortDescription}
                 </p>
 
-                <div className="mt-12 overflow-hidden rounded-[4px] border border-sand/10">
-                  <video
-                    className="aspect-[4/3] w-full object-cover sm:aspect-[16/10]"
-                    autoPlay={!reduce}
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    aria-label={`Aperçu vidéo du projet ${project.title}`}
-                  >
-                    <source src={project.videoSrc} type="video/mp4" />
-                  </video>
-                </div>
+                {project.videoSrc ? (
+                  <div className="mt-12 overflow-hidden rounded-[4px] border border-sand/10">
+                    <video
+                      className="aspect-[4/3] w-full object-cover sm:aspect-[16/10]"
+                      autoPlay={!reduce}
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      aria-label={`Aperçu vidéo du projet ${project.title}`}
+                    >
+                      <source src={project.videoSrc} type="video/mp4" />
+                    </video>
+                  </div>
+                ) : (
+                  <MediaPlaceholder
+                    title={project.title}
+                    className="mt-12 aspect-[4/3] rounded-[4px] sm:aspect-[16/10]"
+                  />
+                )}
 
                 <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
                   <Meta label="Client" value={project.metadata.client} />
@@ -279,6 +291,15 @@ export default function ProjectModal({
                 )}
               </Section>
 
+              {/* 4 bis. Pipeline agentique (projets du Lab IA uniquement) */}
+              {project.pipeline && (
+                <Section root={scrollRef} reduce={reduce} className="mt-24">
+                  <Eyebrow>Pipeline de l'agent</Eyebrow>
+                  <SectionTitle>Du brief à la décision.</SectionTitle>
+                  <PipelineSteps steps={project.pipeline} className="mt-10" />
+                </Section>
+              )}
+
               {/* 5. Résultat */}
               <Section root={scrollRef} reduce={reduce} className="mt-24">
                 <Eyebrow>Résultat</Eyebrow>
@@ -297,7 +318,7 @@ export default function ProjectModal({
                     rel="noopener noreferrer"
                     className="font-fraunces inline-flex items-center justify-center gap-2 rounded-[4px] bg-sand px-8 py-4 text-base font-semibold text-ink transition-transform duration-300 hover:scale-[1.01]"
                   >
-                    Voir le site live
+                    {project.liveLabel ?? 'Voir le site live'}
                     <ArrowUpRight className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
                   </a>
                   {project.githubUrl && (

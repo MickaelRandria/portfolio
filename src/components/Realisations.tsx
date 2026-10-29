@@ -1,8 +1,8 @@
-import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import ProjectCard from './ProjectCard'
 import ProjectModal from './ProjectModal'
 import { projects } from '../data/projects'
+import { useProjectModal } from '../lib/useProjectModal'
 import {
   fadeUp,
   lineContainer,
@@ -12,24 +12,15 @@ import {
 } from '../lib/motion'
 
 export default function Realisations() {
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null)
-
-  const activeIndex = projects.findIndex((p) => p.id === activeProjectId)
-  const activeProject = activeIndex >= 0 ? projects[activeIndex] : null
-  const previousProject = activeIndex > 0 ? projects[activeIndex - 1] : undefined
-  const nextProject =
-    activeIndex >= 0 && activeIndex < projects.length - 1
-      ? projects[activeIndex + 1]
-      : undefined
-
-  const openProject = (id: string) => setActiveProjectId(id)
-  const closeProject = () => setActiveProjectId(null)
-  const goToNext = () => {
-    if (nextProject) setActiveProjectId(nextProject.id)
-  }
-  const goToPrevious = () => {
-    if (previousProject) setActiveProjectId(previousProject.id)
-  }
+  const {
+    activeProject,
+    previousProject,
+    nextProject,
+    openProject,
+    closeProject,
+    goToNext,
+    goToPrevious,
+  } = useProjectModal(projects)
 
   return (
     <section id="realisations" className="bg-sand text-ink">

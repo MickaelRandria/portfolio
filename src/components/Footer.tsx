@@ -1,5 +1,6 @@
 const FOOTER_LINKS = [
   { label: 'Réalisations', href: '#realisations' },
+  { label: 'Lab IA', href: '#lab' },
   { label: 'Approche', href: '#approche' },
   { label: 'À propos', href: '#apropos' },
   { label: 'Contact', href: '#contact' },

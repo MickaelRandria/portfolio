@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import { fadeUp } from '../lib/motion'
 import type { Project } from '../data/projects'
+import MediaPlaceholder from './MediaPlaceholder'
 
 /** Petit point coloré du badge, décliné par position dans la grille. */
 const DOT_CLASSES = ['bg-water', 'bg-gold', 'bg-ink'] as const
@@ -75,19 +76,27 @@ export default function ProjectCard({ project, index, onOpen }: ProjectCardProps
       </p>
 
       {/* Vidéo : démarrée par l'IntersectionObserver, jamais préchargée en entier */}
-      <div className="mt-6 overflow-hidden rounded-[4px] border border-ink/15">
-        <video
-          ref={videoRef}
-          className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          aria-label={`Aperçu vidéo du projet ${project.title}`}
-        >
-          <source src={project.videoSrc} type="video/mp4" />
-        </video>
-      </div>
+      {project.videoSrc ? (
+        <div className="mt-6 overflow-hidden rounded-[4px] border border-ink/15">
+          <video
+            ref={videoRef}
+            className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-label={`Aperçu vidéo du projet ${project.title}`}
+          >
+            <source src={project.videoSrc} type="video/mp4" />
+          </video>
+        </div>
+      ) : (
+        <MediaPlaceholder
+          title={project.title}
+          tone="light"
+          className="mt-6 aspect-[16/10] rounded-[4px]"
+        />
+      )}
 
       {/* Pied de card : stack + indicateur de case study (révélé au survol) */}
       <div className="mt-auto pt-6">

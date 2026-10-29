@@ -4,6 +4,7 @@ import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import TransitionSection from './components/TransitionSection'
 import Realisations from './components/Realisations'
+import LabIA from './components/LabIA'
 import Approche from './components/Approche'
 import APropos from './components/APropos'
 import Audit from './components/Audit'
@@ -20,6 +21,7 @@ function Portfolio() {
         <Hero />
         <TransitionSection />
         <Realisations />
+        <LabIA />
         <Approche />
         <APropos />
         <Audit />

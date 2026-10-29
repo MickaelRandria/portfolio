@@ -53,8 +53,8 @@ export default function TransitionSection() {
           variants={fadeUp}
           className="mt-10 max-w-[600px] text-[1.125rem] leading-[1.6] text-sand/70"
         >
-          Trois projets pensés comme des outils, pas comme des vitrines décoratives.
-          Chaque ligne de code sert un objectif business.
+          Des sites pensés comme des outils, pas comme des vitrines décoratives. Et un
+          Lab IA où des agents transforment la donnée en décisions.
         </motion.p>
 
         <motion.a
