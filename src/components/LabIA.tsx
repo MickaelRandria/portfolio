@@ -111,14 +111,16 @@ export default function LabIA() {
                   Voir le case study
                   <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                 </button>
-                <a
-                  href={featured.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-[4px] border border-gold/60 px-6 py-3 text-sm text-sand transition-colors duration-300 hover:bg-gold hover:text-ink"
-                >
-                  {featured.liveLabel ?? 'Voir le site live'}
-                </a>
+                {featured.liveUrl && (
+                  <a
+                    href={featured.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-[4px] border border-gold/60 px-6 py-3 text-sm text-sand transition-colors duration-300 hover:bg-gold hover:text-ink"
+                  >
+                    {featured.liveLabel ?? 'Voir le site live'}
+                  </a>
+                )}
               </div>
             </div>
 

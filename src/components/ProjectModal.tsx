@@ -312,15 +312,17 @@ export default function ProjectModal({
               {/* 6. CTAs + navigation entre projets */}
               <Section root={scrollRef} reduce={reduce} className="mt-24">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-fraunces inline-flex items-center justify-center gap-2 rounded-[4px] bg-sand px-8 py-4 text-base font-semibold text-ink transition-transform duration-300 hover:scale-[1.01]"
-                  >
-                    {project.liveLabel ?? 'Voir le site live'}
-                    <ArrowUpRight className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
-                  </a>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-fraunces inline-flex items-center justify-center gap-2 rounded-[4px] bg-sand px-8 py-4 text-base font-semibold text-ink transition-transform duration-300 hover:scale-[1.01]"
+                    >
+                      {project.liveLabel ?? 'Voir le site live'}
+                      <ArrowUpRight className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                    </a>
+                  )}
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}

@@ -8,7 +8,8 @@ export type Project = {
    * prend sa place dans la card et le modal (cas des projets du Lab IA).
    */
   videoSrc?: string
-  liveUrl: string
+  /** Absent : le bouton "site live" n'est pas affiché (déploiement hors ligne). */
+  liveUrl?: string
   /** Libellé du CTA principal du modal. Par défaut : "Voir le site live". */
   liveLabel?: string
   githubUrl?: string
@@ -291,6 +292,7 @@ export const labProjects: Project[] = [
     title: 'Baromètre Data',
     shortDescription:
       "Un agent marketing contextuel qui croise un brief de campagne, la météo live et l'attention collective pour dire si un message tombe au bon moment, et quoi changer sinon.",
+    videoSrc: '/barometre-data.mp4',
     liveUrl: 'https://barometre-data.vercel.app',
     liveLabel: "Tester l'agent",
     githubUrl: 'https://github.com/MickaelRandria/Barometre_Data',
@@ -380,6 +382,7 @@ export const labProjects: Project[] = [
     title: 'Beastly Creator Portal',
     shortDescription:
       "Une plateforme d'influence marketing qui centralise créateurs, événements et contenus, avec un agent de casting qui présélectionne les profils adaptés à un brief.",
+    videoSrc: '/beastly.mp4',
     liveUrl: 'https://beastly-creator-portal.vercel.app',
     liveLabel: 'Voir le prototype',
     githubUrl: 'https://github.com/MickaelRandria/beastly-creator-portal-',
@@ -454,8 +457,7 @@ export const labProjects: Project[] = [
     title: 'TimeSpeech',
     shortDescription:
       "Un assistant de création de cours qui génère un déroulé et des slides à partir d'un brief, et calibre la durée réelle sur le débit de parole de l'enseignant.",
-    liveUrl: 'https://time-speech.vercel.app',
-    liveLabel: 'Voir le prototype',
+    videoSrc: '/timespeech.mp4',
     githubUrl: 'https://github.com/MickaelRandria/TimeSpeech',
     metadata: {
       client: 'Projet ESD Bordeaux',
