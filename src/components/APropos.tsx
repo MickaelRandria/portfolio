@@ -2,9 +2,9 @@ import { motion } from 'motion/react'
 import { fadeUp, lineContainer, lineReveal, staggerContainer } from '../lib/motion'
 
 const NOW = [
-  'Disponible en freelance, à Bordeaux et en remote',
-  'M2 Data Marketing IA à Bordeaux',
-  'Alternance Web Analyst chez Cultura terminée en octobre 2026',
+  'Freelance à temps plein, Bordeaux et remote, disponible immédiatement',
+  'Web Analyst chez Cultura, oct. 2024 à oct. 2026',
+  'Master Data Marketing & IA (RNCP niveau 7), obtenu en 2026',
 ] as const
 
 export default function APropos() {
@@ -47,11 +47,11 @@ export default function APropos() {
             variants={fadeUp}
             className="mt-8 max-w-xl text-[1.0625rem] leading-[1.7] text-ink/80"
           >
-            Basé à Bordeaux, je conçois et développe des sites web sur mesure pour des
-            marques qui veulent une vitrine premium et des résultats concrets. En
-            parallèle de ma formation en Data Marketing, j'accompagne mes clients avec
-            une approche complète : direction artistique, développement, et mesure de la
-            performance une fois en ligne.
+            Basé à Bordeaux, je conçois et développe des sites qui se mesurent. Après
+            deux ans comme Web Analyst chez Cultura (tracking, conformité cookies,
+            reporting) et une année d'analyse comportementale à La Poste, j'accompagne
+            mes clients en freelance : conception, développement, et mesure de la
+            performance livrée dès la mise en ligne.
           </motion.p>
 
           <motion.p
@@ -60,9 +60,9 @@ export default function APropos() {
           >
             <span>Bordeaux, France</span>
             <span aria-hidden="true">·</span>
-            <span>Disponible en freelance</span>
+            <span>Freelance, disponible immédiatement</span>
             <span aria-hidden="true">·</span>
-            <span>M2 Data Marketing IA</span>
+            <span>Master Data Marketing &amp; IA</span>
           </motion.p>
         </div>
 
