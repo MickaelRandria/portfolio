@@ -17,6 +17,15 @@ result: >-
 stack: [React, Node.js, Mistral, Open-Meteo, Wikimedia]
 status: Agent opérationnel · LLM Mistral
 video: /barometre-data.mp4
+pipeline:
+  - { label: Brief, detail: Parsing et qualification du brief }
+  - { label: Contexte, detail: Météo Open-Meteo et pages vues Wikimedia }
+  - { label: Score, detail: 'Réceptivité contextuelle, revue par Ministral' }
+  - { label: Écarts, detail: Décalage entre message et contexte }
+  - { label: Variantes, detail: Messages alternatifs générés par LLM }
+  - { label: Activation, detail: "Plan d'activation et plan A/B test" }
+  - { label: Garde-fous, detail: Contrôles RGPD automatiques ou à valider }
+  - { label: Learning, detail: Enseignements calculés sur résultats réels }
 liveUrl: https://barometre-data.vercel.app
 githubUrl: https://github.com/MickaelRandria/Barometre_Data
 ---

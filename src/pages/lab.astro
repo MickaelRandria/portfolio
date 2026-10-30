@@ -1,26 +1,102 @@
 ---
 import Base from '../layouts/Base.astro'
 import ProjectCard from '../components/ProjectCard.astro'
+import PipelineSteps from '../components/PipelineSteps.astro'
 import { getSection } from '../lib/projects'
 
 const lab = await getSection('lab')
+const featured = lab.find((p) => p.data.pipeline)
+
+// Principes tirés de la façon dont les projets du Lab sont réellement construits.
+const PRINCIPLES = [
+  {
+    title: 'Le LLM en second avis',
+    text: 'Le modèle enrichit une décision déterministe ; s’il ne répond pas, l’agent rend quand même un résultat complet.',
+  },
+  {
+    title: 'Des données signalées',
+    text: 'Une donnée live est marquée comme telle. Tout repli est affiché comme une estimation, jamais comme une mesure.',
+  },
+  {
+    title: 'L’humain valide',
+    text: 'Ce que l’agent ne peut pas vérifier, comme un consentement, reste « à valider », jamais « conforme ».',
+  },
+  {
+    title: 'La maturité affichée',
+    text: 'Agent opérationnel, agent simulé ou prototype UX : chaque projet dit ce qu’il est vraiment.',
+  },
+]
 ---
 
 <Base
   title="Lab IA · Agents et automatisations | Mickael Randrianandraina"
-  description="Agents LLM et automatisations qui transforment la donnée en décision : Baromètre Data, Beastly Creator Portal, TimeSpeech."
+  description="Agents LLM et automatisations qui transforment la donnée en décision : Baromètre Data, Beastly Creator Portal, TimeSpeech. Démos testables."
 >
   <section class="grid-tech bg-ink text-sand">
     <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-28 xl:px-24">
       <p class="annot text-gold">Lab IA &amp; Data</p>
-      <h1 class="font-fraunces mt-4 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 7vw, 6rem)">
+      <h1 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 7vw, 6rem)">
         Des agents qui <span class="italic text-gold">décident</span>.
       </h1>
       <p class="mt-6 max-w-2xl text-lg leading-[1.6] text-sand/75">
-        IA agentique, LLM et données live. Chaque projet affiche son niveau de maturité réel.
+        IA agentique, LLM et données live. Des outils qui lisent un contexte, enchaînent des
+        décisions et restent honnêtes sur ce qu'ils savent vraiment. Les démos se testent en
+        ligne.
       </p>
       <div class="mt-12">
-        {lab.map((project) => <ProjectCard project={project} tone="dark" />)}
+        {lab.map((project, i) => <ProjectCard project={project} tone="dark" index={i + 1} headingLevel={2} />)}
+      </div>
+    </div>
+  </section>
+
+  {
+    featured?.data.pipeline && (
+      <section class="border-t border-gold/15 bg-ink-2 text-sand">
+        <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-24 xl:px-24">
+          <div data-reveal class="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="annot text-gold">Sous le capot · {featured.data.title}</p>
+              <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] lg:text-5xl">Du brief à la décision.</h2>
+            </div>
+            {featured.data.liveUrl && (
+              <a
+                href={featured.data.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center rounded-sm bg-sand px-7 font-medium text-ink"
+              >
+                Tester l'agent ↗
+              </a>
+            )}
+          </div>
+          <PipelineSteps steps={featured.data.pipeline} class="mt-14" />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="paper bg-sand text-ink">
+    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-24 xl:px-24">
+      <p class="annot text-water">Principes</p>
+      <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] lg:text-5xl">
+        Comment je construis un <span class="italic">agent</span>.
+      </h2>
+      <ul class="mt-12 grid grid-cols-1 border-t border-ink/20 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          PRINCIPLES.map((p, i) => (
+            <li data-reveal class="border-b border-ink/20 py-8 sm:pr-8 lg:border-b-0 lg:border-r lg:pl-8 lg:first:pl-0 lg:last:border-r-0">
+              <span class="font-mono text-sm text-water">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="font-fraunces mt-3 text-2xl font-bold">{p.title}</h3>
+              <p class="mt-3 leading-[1.6] text-ink/75">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-14 flex flex-wrap items-center justify-between gap-6 rounded-sm border border-ink/15 p-8">
+        <p class="font-fraunces text-2xl font-semibold">Un cas d'usage pour vos données ?</p>
+        <a href="/offres#agent-ia" class="inline-flex min-h-12 items-center rounded-sm bg-ink px-7 font-medium text-sand">
+          Voir l'offre Agent IA →
+        </a>
       </div>
     </div>
   </section>

@@ -1,17 +1,79 @@
 ---
 import Base from '../layouts/Base.astro'
-import SectionStub from '../components/SectionStub.astro'
+import ContactForm from '../components/ContactForm'
+import Faq from '../components/Faq.astro'
+import { CHANNELS, EMAIL, PRICE_NOTE } from '../lib/site'
 ---
 
 <Base
   title="Contact · Réserver 30 min | Mickael Randrianandraina"
   description="Un premier échange de 30 min pour cadrer votre projet. Réponse sous 48 h. Bordeaux et remote."
 >
-  <SectionStub
-    num="Contact"
-    title="Réserver 30 min"
-    todo="Formulaire multi-étapes existant (îlot React), créneau, FAQ objections."
-  >
-    <h1 class="sr-only">Contact</h1>
-  </SectionStub>
+  <section class="paper bg-sand text-ink">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-16 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-28 xl:px-24">
+      <div class="lg:col-span-6">
+        <p class="annot text-water">Contact</p>
+        <h1 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 6vw, 5rem)">
+          Réservons <span class="italic">30 min</span>.
+        </h1>
+        <p class="mt-6 max-w-lg text-lg leading-[1.6] text-ink/75">
+          Un premier échange pour comprendre votre contexte et cadrer le périmètre. {PRICE_NOTE}
+        </p>
+        <div class="mt-12">
+          <ContactForm client:load />
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5 lg:col-start-8">
+        <div class="rounded-sm border border-ink/15 p-7 lg:p-8">
+          <p class="annot text-ink/60">Écrire directement</p>
+          <a href={`mailto:${EMAIL}`} class="font-fraunces mt-3 inline-block break-all text-2xl hover:text-water">
+            {EMAIL}
+          </a>
+          <p class="mt-2 font-mono text-xs text-ink/65">Réponse sous 48 h</p>
+
+          <ul class="mt-8 border-t border-ink/15">
+            {
+              CHANNELS.filter((c) => c.label !== 'Email' && c.href !== '/contact').map((c) => (
+                <li class="border-b border-ink/15">
+                  {c.href ? (
+                    <a
+                      href={c.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex min-h-14 items-center justify-between py-3 hover:text-water"
+                    >
+                      <span class="font-fraunces text-xl">{c.label}</span>
+                      <span class="annot" aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <span class="flex min-h-14 items-center justify-between py-3 text-ink/50">
+                      <span class="font-fraunces text-xl">{c.label}</span>
+                      <span class="annot">À venir</span>
+                    </span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="annot mt-8 text-ink/60">Localisation</p>
+          <p class="font-fraunces mt-2 text-xl">Bordeaux, France</p>
+          <p class="mt-1 text-sm text-ink/65">Disponible en remote, en France et à l'international.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-ink text-sand">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-10 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24 xl:px-24">
+      <div class="lg:col-span-4">
+        <p class="annot text-gold">Avant d'écrire</p>
+        <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05]">Questions fréquentes</h2>
+      </div>
+      <div class="lg:col-span-7 lg:col-start-6">
+        <Faq />
+      </div>
+    </div>
+  </section>
 </Base>

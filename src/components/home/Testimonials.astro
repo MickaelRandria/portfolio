@@ -1,0 +1,38 @@
+---
+/**
+ * Témoignages. Composant prêt, contenu à fournir : jamais de faux témoignage.
+ * Pour en publier un, remplir `quote`, `name` et `role` ; un emplacement sans
+ * citation s'affiche comme « à venir ».
+ */
+const TESTIMONIALS: { quote?: string; name?: string; role?: string }[] = [{}, {}]
+---
+
+<section id="temoignages" class="bg-ink text-sand">
+  <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-16 lg:py-20 xl:px-24">
+    <p data-reveal class="annot text-gold">07 · Témoignages</p>
+    <h2 data-reveal class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
+      Ce qu'en disent les <span class="italic text-gold">clients</span>.
+    </h2>
+
+    <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        TESTIMONIALS.map((t) =>
+          t.quote ? (
+            <figure data-reveal class="rounded-sm border border-sand/15 p-8">
+              <blockquote class="font-fraunces text-2xl italic leading-[1.35]">« {t.quote} »</blockquote>
+              <figcaption class="mt-6">
+                <span class="block font-medium">{t.name}</span>
+                <span class="annot mt-1 block text-sand/60">{t.role}</span>
+              </figcaption>
+            </figure>
+          ) : (
+            <div data-reveal class="flex min-h-48 flex-col justify-between rounded-sm border border-dashed border-sand/25 p-8 text-sand/55">
+              <span class="font-fraunces text-5xl leading-none" aria-hidden="true">“</span>
+              <p class="annot">Témoignage à venir · nom et activité du client</p>
+            </div>
+          ),
+        )
+      }
+    </div>
+  </div>
+</section>

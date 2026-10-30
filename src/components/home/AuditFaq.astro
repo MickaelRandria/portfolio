@@ -1,0 +1,32 @@
+---
+import Faq from '../Faq.astro'
+---
+
+<section id="audit" class="grid-tech bg-ink text-sand">
+  <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24 xl:px-24">
+    <div data-reveal class="lg:col-span-5">
+      <p class="annot text-gold">09 · Audit offert</p>
+      <h2 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 4.25rem)">
+        Vous avez un site qui <span class="italic text-gold">mérite mieux</span> ?
+      </h2>
+      <p class="mt-6 max-w-md text-lg leading-[1.6] text-sand/75">
+        Premier audit en 30 minutes. J'identifie les leviers concrets sur votre site actuel :
+        performance, conversion, tracking, conformité. Vous repartez avec un plan d'action
+        clair et priorisé.
+      </p>
+      <a
+        href="/contact"
+        class="mt-10 inline-flex min-h-12 items-center gap-2 rounded-sm bg-sand px-8 font-medium text-ink transition-transform hover:-translate-y-0.5 motion-reduce:transform-none"
+      >
+        Demander mon audit <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div data-reveal class="lg:col-span-6 lg:col-start-7">
+      <h3 class="annot text-sand/55">Questions fréquentes</h3>
+      <div class="mt-4">
+        <Faq />
+      </div>
+    </div>
+  </div>
+</section>

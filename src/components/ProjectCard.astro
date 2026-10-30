@@ -7,20 +7,36 @@ interface Props {
   project: CollectionEntry<'projects'>
   /** Fond de la section qui accueille la carte. */
   tone?: 'light' | 'dark'
+  /**
+   * `wide` : visuel et texte côte à côte, pleine largeur (Réalisations, /lab).
+   * `stacked` : visuel au-dessus, pour deux cartes côte à côte (teaser Lab).
+   * Même gabarit dans les deux cas : mêmes champs, même ordre.
+   */
+  layout?: 'wide' | 'stacked'
+  /** Numéro affiché en mono (01, 02...). */
+  index?: number
+  /** Niveau du titre : 2 quand la carte est directement sous le h1 de la page. */
+  headingLevel?: 2 | 3
 }
 
-const { project, tone = 'light' } = Astro.props
+const { project, tone = 'light', layout = 'wide', index, headingLevel = 3 } = Astro.props
+const Heading = headingLevel === 2 ? 'h2' : 'h3'
 const p = project.data
 const base = p.section === 'lab' ? '/lab' : '/realisations'
 const caseUrl = `${base}/${project.id}`
+const wide = layout === 'wide'
 const muted = tone === 'light' ? 'text-ink/70' : 'text-sand/70'
 const rule = tone === 'light' ? 'border-ink/15' : 'border-sand/15'
+const accent = tone === 'light' ? 'text-water' : 'text-gold'
 ---
 
-<!-- Gabarit de carte unique, Réalisations et Lab : visuel pleine largeur,
-     typologie, client, une ligne de valeur, le chiffre, deux CTA. -->
-<article data-reveal class={`grid grid-cols-1 gap-8 border-t ${rule} py-12 lg:grid-cols-12 lg:gap-12 lg:py-16`}>
-  <div class="crop lg:col-span-7">
+<!-- Gabarit de carte unique, Réalisations et Lab : visuel grand, typologie,
+     client, une ligne de valeur, le chiffre, deux CTA. -->
+<article
+  data-reveal
+  class={`grid grid-cols-1 gap-8 border-t ${rule} ${wide ? 'py-10 lg:grid-cols-12 lg:gap-12 lg:py-12' : 'pt-8'}`}
+>
+  <a href={caseUrl} tabindex="-1" aria-hidden="true" class={`crop block ${accent} ${wide ? 'lg:col-span-7' : ''}`}>
     {
       p.video ? (
         <LazyVideo
@@ -33,23 +49,25 @@ const rule = tone === 'light' ? 'border-ink/15' : 'border-sand/15'
         <MediaPlaceholder title={p.title} tone={tone} className="aspect-[16/10] rounded-sm" />
       )
     }
-  </div>
+  </a>
 
-  <div class="flex flex-col lg:col-span-5">
+  <div class={`flex flex-col ${wide ? 'lg:col-span-5' : ''}`}>
     <p class={`annot ${muted}`}>
+      {index !== undefined && <span class={accent}>{String(index).padStart(2, '0')} · </span>}
       {p.typology} · {p.client} · {p.year}
     </p>
-    {p.status && <p class="annot mt-2 text-gold">{p.status}</p>}
-    <h3 class="font-fraunces mt-5 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
-      {p.title}
-    </h3>
+    {p.status && <p class={`annot mt-2 ${accent}`}>{p.status}</p>}
+    <Heading class={`font-fraunces mt-5 font-bold leading-[1.05] tracking-tight ${wide ? 'text-4xl lg:text-5xl' : 'text-3xl lg:text-4xl'}`}>
+      <a href={caseUrl} class="hover:underline hover:decoration-1 hover:underline-offset-4">{p.title}</a>
+    </Heading>
     <p class={`mt-4 text-[1.0625rem] leading-[1.6] ${muted}`}>{p.value}</p>
 
-    <p class={`mt-8 border-l-2 border-gold pl-4 font-mono text-sm leading-[1.6]`}>
+    <p class={`mt-7 border-t ${rule} pt-5 font-mono text-[13px] leading-[1.65]`}>
+      <span class={`annot mb-2 block ${accent}`}>Le chiffre</span>
       {p.metric}
     </p>
 
-    <div class="mt-10 flex flex-wrap gap-3 lg:mt-auto lg:pt-10">
+    <div class={`mt-8 flex flex-wrap gap-3 ${wide ? 'lg:mt-auto lg:pt-10' : ''}`}>
       <a
         href={caseUrl}
         class={`inline-flex min-h-11 items-center rounded-sm px-6 text-sm font-medium ${tone === 'light' ? 'bg-ink text-sand' : 'bg-sand text-ink'}`}
@@ -64,7 +82,7 @@ const rule = tone === 'light' ? 'border-ink/15' : 'border-sand/15'
             rel="noopener noreferrer"
             class={`inline-flex min-h-11 items-center rounded-sm border px-6 text-sm ${tone === 'light' ? 'border-ink/40' : 'border-sand/40'}`}
           >
-            Voir le site live
+            {p.section === 'lab' ? 'Tester la démo' : 'Voir le site live'}
           </a>
         )
       }

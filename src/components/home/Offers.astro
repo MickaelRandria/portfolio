@@ -1,0 +1,72 @@
+---
+import { DELAY_NOTE, OFFERS, PRICE_NOTE } from '../../lib/site'
+---
+
+<section id="offres" class="bg-ink text-sand">
+  <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-24 xl:px-24">
+    <div data-reveal class="grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <p class="annot text-gold">03 · Ce que je fais</p>
+        <h2 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.25rem, 5.5vw, 4.75rem)">
+          Des sites qui se <span class="italic text-gold">mesurent</span>.
+        </h2>
+      </div>
+      <p class="text-lg leading-[1.6] text-sand/75 lg:col-span-4 lg:col-start-9 lg:self-end">
+        Un site livré par un analyste qui code : instrumenté dès le départ, conforme, et dont
+        on peut prouver les résultats.
+      </p>
+    </div>
+
+    <ol class="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
+      {
+        OFFERS.map((offer, i) => (
+          <li
+            data-reveal
+            class={`flex flex-col rounded-sm border p-7 lg:p-8 ${i === 0 ? 'border-gold/60 bg-ink-2' : 'border-sand/15'}`}
+          >
+            <div class="flex items-center justify-between gap-4">
+              <span class="annot text-gold">Offre {offer.num}</span>
+              {i === 0 && <span class="annot rounded-full bg-gold px-2.5 py-1 text-ink">Offre principale</span>}
+            </div>
+            <h3 class="font-fraunces mt-6 text-3xl font-bold leading-[1.1]">{offer.title}</h3>
+            <p class="mt-4 leading-[1.6] text-sand/75">{offer.promise}</p>
+
+            <dl class="mt-8 space-y-5 border-t border-sand/15 pt-6 text-sm">
+              <div>
+                <dt class="annot text-sand/50">Pour qui</dt>
+                <dd class="mt-1.5 leading-[1.55] text-sand/85">{offer.forWho}</dd>
+              </div>
+              <div>
+                <dt class="annot text-sand/50">Vous repartez avec</dt>
+                <dd class="mt-1.5">
+                  <ul class="space-y-1.5">
+                    {offer.deliverables.map((d) => (
+                      <li class="flex gap-2.5 text-sand/85">
+                        <span class="mt-2 h-px w-3 shrink-0 bg-gold" aria-hidden="true" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+              <div>
+                <dt class="annot text-sand/50">Délai</dt>
+                <dd class="mt-1.5 font-mono text-[13px] leading-[1.55] text-sand">{offer.delay}</dd>
+                <dd class="mt-1 text-xs text-sand/55">{DELAY_NOTE}</dd>
+              </div>
+            </dl>
+
+            <a
+              href={`/offres#${offer.id}`}
+              class="mt-8 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium text-sand underline decoration-gold/60 underline-offset-4 hover:decoration-gold lg:mt-auto lg:pt-8"
+            >
+              Détail de l'offre <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p data-reveal class="annot mt-10 text-sand/60">{PRICE_NOTE}</p>
+  </div>
+</section>

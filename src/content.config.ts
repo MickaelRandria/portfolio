@@ -34,6 +34,8 @@ const projects = defineCollection({
     /** Niveau de maturité, affiché honnêtement (agent réel, simulé, prototype). */
     status: z.string().optional(),
     video: z.string().optional(),
+    /** Étapes d'un agent, affichées en frise (projets agentiques). */
+    pipeline: z.array(z.object({ label: z.string(), detail: z.string() })).optional(),
     liveUrl: z.url().optional(),
     githubUrl: z.url().optional(),
   }),

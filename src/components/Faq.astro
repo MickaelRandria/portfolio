@@ -1,0 +1,48 @@
+---
+import { PRICE_NOTE } from '../lib/site'
+
+interface Props {
+  tone?: 'light' | 'dark'
+}
+
+const { tone = 'dark' } = Astro.props
+
+// Les 4 objections du brief. Réponses alignées sur les offres et délais fournis.
+// À VALIDER : « Qui écrit le contenu » et « Après la livraison » décrivent un
+// fonctionnement par défaut, à ajuster selon tes conditions.
+const QUESTIONS = [
+  {
+    q: 'Quel budget prévoir ?',
+    a: `${PRICE_NOTE} Le premier échange sert à cadrer le périmètre : vous recevez ensuite un devis détaillé par livrable, sans engagement.`,
+  },
+  {
+    q: 'Combien de temps ça prend ?',
+    a: 'Compter 4 à 6 semaines pour un site mesuré, un audit sous 10 jours, un prototype d’agent en 2 à 3 semaines. Délai indicatif, confirmé après le cadrage.',
+  },
+  {
+    q: 'Qui écrit le contenu du site ?',
+    a: 'Vous apportez la matière : votre offre, vos références, vos visuels. Je la structure et la mets en forme pour le web et le référencement ; la rédaction complète se définit au cadrage.',
+  },
+  {
+    q: 'Et après la livraison ?',
+    a: 'Le site part avec son plan de taggage documenté et son dashboard de suivi : vous savez ce qui est mesuré et comment le lire. Un accompagnement sur les itérations peut se prévoir dès le devis.',
+  },
+]
+
+const border = tone === 'dark' ? 'border-sand/15' : 'border-ink/15'
+const muted = tone === 'dark' ? 'text-sand/75' : 'text-ink/75'
+---
+
+<div class={`border-t ${border}`}>
+  {
+    QUESTIONS.map((item) => (
+      <details class={`group border-b ${border}`}>
+        <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
+          <span class="font-fraunces text-xl font-semibold lg:text-2xl">{item.q}</span>
+          <span class="font-mono text-lg transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+        </summary>
+        <p class={`max-w-3xl pb-6 leading-[1.65] ${muted}`}>{item.a}</p>
+      </details>
+    ))
+  }
+</div>

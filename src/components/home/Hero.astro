@@ -1,0 +1,105 @@
+---
+import Sparkline from '../Sparkline.astro'
+
+// Chiffres réels et vérifiés (réponses au brief). Ne rien ajouter.
+const STATS = [
+  { value: '6', label: 'projets livrés' },
+  { value: '6,4 M', label: 'de visites analysées' },
+  { value: '3 ans', label: "d'expérience en web analytics" },
+]
+---
+
+<section id="top" class="grid-tech relative overflow-hidden bg-ink text-sand">
+  <!-- Duotone éditorial : désaturation puis remap ombres -> encre, lumières -> crème. -->
+  <svg class="absolute h-0 w-0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="duotone-mickael" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 1 0"></feColorMatrix>
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0.059 0.957"></feFuncR>
+          <feFuncG type="table" tableValues="0.106 0.922"></feFuncG>
+          <feFuncB type="table" tableValues="0.176 0.851"></feFuncB>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div
+    class="mx-auto flex min-h-[calc(100svh-73px)] max-w-[1600px] flex-col justify-between gap-14 px-5 pb-10 pt-14 sm:px-8 lg:px-16 lg:pt-20 xl:px-24"
+  >
+    <div class="grid grid-cols-1 items-end gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-7">
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
+          <p class="annot inline-flex items-center gap-2.5 rounded-full border border-sand/20 px-3 py-1.5 text-sand">
+            <span class="relative flex h-2 w-2" aria-hidden="true">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4cc38a] opacity-60 motion-reduce:animate-none"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-[#4cc38a]"></span>
+            </span>
+            Disponible immédiatement
+          </p>
+          <p class="annot text-gold">Web Analyst freelance · Bordeaux + remote</p>
+        </div>
+
+        <h1
+          class="font-fraunces mt-8 font-bold leading-[0.95] tracking-tight text-balance"
+          style="font-size: clamp(3rem, 9vw, 8.5rem)"
+        >
+          Concevoir.<br />Mesurer.<br />Faire <span class="italic text-gold">grandir</span>.
+        </h1>
+
+        <p class="mt-8 max-w-xl text-lg leading-[1.6] text-sand/80 lg:text-xl">
+          Des sites qui se mesurent. Tracking, conformité RGPD et mesure de la performance
+          livrés dedans, par un analyste qui code.
+        </p>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a
+            href="#realisations"
+            class="inline-flex min-h-12 items-center gap-2 rounded-sm bg-sand px-7 font-medium text-ink transition-transform hover:-translate-y-0.5 motion-reduce:transform-none"
+          >
+            Voir les réalisations
+          </a>
+          <a
+            href="/contact"
+            class="inline-flex min-h-12 items-center gap-2 rounded-sm border border-gold/60 px-7 text-sand transition-colors hover:bg-gold hover:text-ink"
+          >
+            Réserver 30 min
+          </a>
+        </div>
+      </div>
+
+      <figure class="relative mx-auto w-full max-w-[420px] lg:col-span-4 lg:col-start-9 lg:max-w-none">
+        <div class="crop text-gold">
+          <img
+            src="/photo-mickael.webp"
+            srcset="/photo-mickael-480.webp 480w, /photo-mickael.webp 960w"
+            sizes="(min-width: 1024px) 30vw, 420px"
+            width="960"
+            height="1200"
+            alt="Portrait de Mickael Randrianandraina, Web Analyst à Bordeaux"
+            fetchpriority="high"
+            decoding="async"
+            class="aspect-[4/5] w-full object-cover object-top"
+            style="filter: url(#duotone-mickael) contrast(1.08) brightness(0.95)"
+          />
+        </div>
+        <figcaption class="annot mt-5 flex items-center justify-between gap-4 text-sand/55">
+          <span>Fig. 01 · Bordeaux, 2026</span>
+          <span>Analyste qui code</span>
+        </figcaption>
+        <Sparkline class="pointer-events-none absolute -left-16 top-10 hidden h-16 w-52 text-gold/50 lg:block" />
+      </figure>
+    </div>
+
+    <dl class="grid grid-cols-1 border-t border-sand/20 sm:grid-cols-3">
+      {
+        STATS.map((s, i) => (
+          <div class={`flex items-baseline gap-4 py-6 sm:block ${i ? 'sm:border-l sm:border-sand/20 sm:pl-8' : ''}`}>
+            <dt class="annot order-2 text-sand/60 sm:mt-2">{s.label}</dt>
+            <dd class="order-1 font-mono text-4xl font-medium tracking-tight text-sand lg:text-5xl">{s.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

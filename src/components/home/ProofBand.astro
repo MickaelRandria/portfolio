@@ -1,0 +1,28 @@
+---
+import Sparkline from '../Sparkline.astro'
+---
+
+<!-- Bandeau de preuve : traité comme une citation forte, pas comme une stat. -->
+<section aria-label="Preuve de résultat" class="paper bg-sand text-ink">
+  <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-16 lg:py-20 xl:px-24">
+    <figure data-reveal class="grid gap-10 lg:grid-cols-12 lg:items-end">
+      <blockquote class="lg:col-span-9">
+        <p class="font-fraunces font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 7vw, 6.5rem)">
+          2,22&nbsp;M€ <span class="italic font-normal">de chiffre d'affaires incrémental</span>
+        </p>
+        <p class="mt-6 max-w-3xl text-lg leading-[1.6] text-ink/75 lg:text-xl">
+          mesurés sur une analyse d'impact des campagnes radio sur le trafic web et magasin.
+        </p>
+      </blockquote>
+      <figcaption class="lg:col-span-3">
+        <Sparkline class="h-14 w-full text-water" points={[0.8, 0.78, 0.74, 0.76, 0.6, 0.62, 0.45, 0.4, 0.42, 0.24, 0.2, 0.1]} />
+        <p class="annot mt-5 text-ink">Mission Cultura, 2024</p>
+        <ul class="mt-4 space-y-1.5 border-t border-ink/15 pt-4 font-mono text-xs text-ink/70">
+          <li>43 K€ web</li>
+          <li>2,18 M€ magasin</li>
+          <li>+154 136 visites magasin incrémentales</li>
+        </ul>
+      </figcaption>
+    </figure>
+  </div>
+</section>

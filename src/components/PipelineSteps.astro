@@ -1,0 +1,23 @@
+---
+interface Props {
+  steps: { label: string; detail: string }[]
+  class?: string
+}
+
+const { steps, class: className = '' } = Astro.props
+---
+
+<!-- Frise des étapes d'un agent : filet doré ponctué d'un point par étape.
+     2 colonnes en mobile, 4 en desktop. -->
+<ol class={`grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 ${className}`}>
+  {
+    steps.map((step, i) => (
+      <li class="relative border-t border-gold/35 pt-6">
+        <span class="absolute -top-[5px] left-0 h-[9px] w-[9px] rounded-full bg-gold" aria-hidden="true" />
+        <span class="font-mono text-xs text-gold">{String(i + 1).padStart(2, '0')}</span>
+        <p class="font-fraunces mt-2 text-lg font-semibold">{step.label}</p>
+        <p class="mt-1.5 text-sm leading-[1.55] text-sand/65">{step.detail}</p>
+      </li>
+    ))
+  }
+</ol>

@@ -1,0 +1,61 @@
+---
+/**
+ * Bandeau de confiance. Micro-label honnête sur la nature du lien.
+ * TODO logos : déposer les fichiers dans /public/logos/ et renseigner `logo`
+ * (ex. '/logos/cultura.svg') ; en attendant, le nom s'affiche en texte.
+ */
+const ITEMS: { name: string; kind: string; logo?: string }[] = [
+  { name: 'Cultura', kind: 'En poste · 2024–2026' },
+  { name: 'La Poste', kind: 'En poste · 2023–2024' },
+  { name: 'PrestigeRent', kind: 'En mission' },
+  { name: 'Petite Maille', kind: 'En mission' },
+  { name: 'Beastly', kind: 'Projet RNCP' },
+]
+---
+
+<section aria-label="Ils m'ont fait confiance" class="paper overflow-hidden border-y border-ink/10 bg-sand text-ink">
+  <div class="mx-auto flex max-w-[1600px] items-center gap-8 px-5 py-6 sm:px-8 lg:px-16 xl:px-24">
+    <p class="annot shrink-0 text-ink/60">Ils m'ont fait confiance</p>
+    <div class="marquee relative min-w-0 flex-1 overflow-hidden">
+      <!-- Deux pistes identiques pour la boucle ; la seconde est masquée aux lecteurs d'écran. -->
+      <div class="marquee-track flex w-max">
+        {
+          [0, 1].map((copy) => (
+            <ul class="flex shrink-0 items-center" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {ITEMS.map((item) => (
+                <li class="flex items-center gap-4 px-8">
+                  {item.logo ? (
+                    <img src={item.logo} alt={item.name} class="h-7 w-auto opacity-80" loading="lazy" />
+                  ) : (
+                    <span class="font-fraunces text-2xl font-semibold whitespace-nowrap">{item.name}</span>
+                  )}
+                  <span class="annot whitespace-nowrap text-ink/55">{item.kind}</span>
+                  <span class="ml-4 h-1 w-1 rounded-full bg-ink/30" aria-hidden="true" />
+                </li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee-track {
+      animation: marquee 40s linear infinite;
+    }
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+</style>

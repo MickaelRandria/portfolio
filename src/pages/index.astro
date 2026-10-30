@@ -1,7 +1,14 @@
 ---
 import Base from '../layouts/Base.astro'
 import ProjectCard from '../components/ProjectCard.astro'
-import SectionStub from '../components/SectionStub.astro'
+import Hero from '../components/home/Hero.astro'
+import TrustBand from '../components/home/TrustBand.astro'
+import Offers from '../components/home/Offers.astro'
+import ProofBand from '../components/home/ProofBand.astro'
+import Method from '../components/home/Method.astro'
+import Testimonials from '../components/home/Testimonials.astro'
+import About from '../components/home/About.astro'
+import AuditFaq from '../components/home/AuditFaq.astro'
 import { getSection } from '../lib/projects'
 
 const realisations = await getSection('realisations')
@@ -12,53 +19,52 @@ const lab = (await getSection('lab')).slice(0, 2)
   title="Mickael Randrianandraina · Web Analyst freelance, Bordeaux"
   description="Des sites qui se mesurent. Tracking, conformité RGPD et mesure de la performance livrés dedans. Bordeaux et remote."
 >
-  <SectionStub
-    num="01"
-    title="Concevoir. Mesurer. Faire grandir."
-    todo="Hero plein écran : pitch, 3 chiffres (6 projets livrés, 6,4 M de visites analysées, 3 ans en web analytics), disponibilité, Bordeaux + remote, CTA « Voir les réalisations » / « Réserver 30 min »."
-  >
-    <h1 class="sr-only">Mickael Randrianandraina, Web Analyst freelance à Bordeaux</h1>
-  </SectionStub>
-  <SectionStub
-    num="02"
-    title="Bandeau de confiance"
-    todo="Cultura et La Poste (en poste), PrestigeRent, Petite Maille, Beastly (en mission). Noms en texte en attendant les fichiers logos."
-    tone="light"
-  />
-  <SectionStub num="03" title="Ce que je fais" todo="Les 3 offres : pour qui, ce que le client repart avec, délai indicatif, lien vers /offres. Pas de prix." />
+  <Hero />
+  <TrustBand />
+  <Offers />
+  <ProofBand />
 
   <section id="realisations" class="paper bg-sand text-ink">
-    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 xl:px-24">
-      <p class="annot text-ink/60">04 · Réalisations</p>
-      <h2 class="font-fraunces mt-4 text-4xl font-bold lg:text-5xl">Réalisations</h2>
-      <div class="mt-10">
-        {realisations.map((project) => <ProjectCard project={project} tone="light" />)}
+    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-24 xl:px-24">
+      <div data-reveal class="grid gap-6 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <p class="annot text-water">04 · Réalisations</p>
+          <h2 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.25rem, 5.5vw, 4.75rem)">
+            Des projets, <span class="italic">un chiffre chacun</span>.
+          </h2>
+        </div>
+        <p class="text-lg leading-[1.6] text-ink/75 lg:col-span-4 lg:col-start-9 lg:self-end">
+          Conformité et SEO local, feature produit, catalogue connecté : chaque projet est
+          présenté avec ce qu'il a réellement livré.
+        </p>
+      </div>
+      <div class="mt-12">
+        {realisations.map((project, i) => <ProjectCard project={project} tone="light" index={i + 1} />)}
       </div>
     </div>
   </section>
 
-  <section class="bg-ink text-sand">
-    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 xl:px-24">
-      <p class="annot text-gold">05 · Lab IA</p>
-      <h2 class="font-fraunces mt-4 text-4xl font-bold lg:text-5xl">Des agents qui <span class="italic text-gold">décident</span>.</h2>
-      <div class="mt-10">
-        {lab.map((project) => <ProjectCard project={project} tone="dark" />)}
+  <section id="lab" class="bg-ink text-sand">
+    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-20 xl:px-24">
+      <div data-reveal class="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="annot text-gold">05 · Lab IA</p>
+          <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
+            Des agents qui <span class="italic text-gold">décident</span>.
+          </h2>
+        </div>
+        <a href="/lab" class="annot inline-flex min-h-11 items-center text-sand underline decoration-gold/50 underline-offset-4 hover:decoration-gold">
+          Tout le Lab IA →
+        </a>
       </div>
-      <a href="/lab" class="mt-6 inline-flex min-h-11 items-center text-sm underline underline-offset-4">Tout le Lab IA</a>
+      <div class="mt-10 grid grid-cols-1 gap-x-10 gap-y-4 md:grid-cols-2">
+        {lab.map((project) => <ProjectCard project={project} tone="dark" layout="stacked" />)}
+      </div>
     </div>
   </section>
 
-  <SectionStub num="06" title="Méthode en 3 temps" todo="Concevoir / Mesurer / Faire grandir, en bande horizontale compacte." tone="light" />
-  <SectionStub
-    num="07"
-    title="Témoignages"
-    todo="Composant prêt, 2 citations courtes (nom + activité). Emplacement explicite tant que les témoignages ne sont pas fournis, jamais de faux témoignage."
-  />
-  <SectionStub
-    num="08"
-    title="À propos"
-    todo="Photo + 4 lignes + « En ce moment » : Freelance à temps plein, Web Analyst chez Cultura (oct. 2024 à oct. 2026), Master Data Marketing & IA obtenu en 2026."
-    tone="light"
-  />
-  <SectionStub num="09" title="Audit offert + FAQ" todo="Bloc audit 30 min existant + 4 questions : budget, délai, qui écrit le contenu, après la livraison." />
+  <Method />
+  <Testimonials />
+  <About />
+  <AuditFaq />
 </Base>

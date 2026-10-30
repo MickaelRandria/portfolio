@@ -1,0 +1,51 @@
+---
+// Contenu exact fourni pour le bloc « En ce moment ».
+const NOW = [
+  { label: 'Freelance à temps plein', detail: 'Bordeaux et remote, disponible immédiatement' },
+  { label: 'Web Analyst chez Cultura', detail: 'oct. 2024 à oct. 2026' },
+  { label: 'Master Data Marketing & IA', detail: 'RNCP niveau 7, obtenu en 2026' },
+]
+---
+
+<section id="apropos" class="paper bg-sand text-ink">
+  <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24 xl:px-24">
+    <div data-reveal class="crop max-w-[260px] text-water lg:col-span-3">
+      <img
+        src="/photo-mickael-480.webp"
+        width="480"
+        height="600"
+        alt="Mickael Randrianandraina"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[4/5] w-full object-cover object-top grayscale"
+      />
+    </div>
+
+    <div data-reveal class="lg:col-span-5">
+      <p class="annot text-water">08 · À propos</p>
+      <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
+        Un analyste <span class="italic">qui code</span>.
+      </h2>
+      <p class="mt-6 max-w-xl text-[1.0625rem] leading-[1.7] text-ink/80">
+        Deux ans de web analytics chez Cultura (tracking Commanders Act, Adobe Analytics,
+        conformité cookies, reporting automatisé), une année d'analyse comportementale à La
+        Poste. Aujourd'hui je livre des sites et des outils où la mesure est prévue dès la
+        conception.
+      </p>
+    </div>
+
+    <aside data-reveal class="self-start rounded-sm border border-ink/15 bg-sand-2/60 p-7 lg:col-span-4">
+      <h3 class="annot text-ink/60">En ce moment</h3>
+      <ul class="mt-5 space-y-4">
+        {
+          NOW.map((item) => (
+            <li class="border-t border-ink/10 pt-4 first:border-t-0 first:pt-0">
+              <span class="block font-medium">{item.label}</span>
+              <span class="mt-0.5 block font-mono text-xs text-ink/65">{item.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+</section>

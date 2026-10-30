@@ -15,8 +15,9 @@
   --color-gold: #d9c5a0;     /* accent clair : eyebrows, italiques, traits */
   --color-water: #2e6f8e;    /* focus et liens sur crème uniquement */
 
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Polices auto-hébergées (@fontsource, importées dans Base.astro) */
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
   /* Micro-labels, eyebrows, numéros de section, chiffres, métadonnées */
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }

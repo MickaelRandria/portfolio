@@ -1,0 +1,55 @@
+---
+const STEPS = [
+  {
+    num: '01',
+    title: 'Concevoir',
+    text: 'Un atelier de cadrage pour fixer objectifs, parcours et indicateurs. Le site est dessiné autour de ce qu’on devra mesurer.',
+    tags: ['Cadrage', 'Parcours', 'KPI'],
+  },
+  {
+    num: '02',
+    title: 'Mesurer',
+    text: 'Plan de taggage, consentement et conformité installés avant la mise en ligne, recettés tag par tag.',
+    tags: ['Tracking', 'RGPD', 'Recette'],
+  },
+  {
+    num: '03',
+    title: 'Faire grandir',
+    text: 'Un dashboard de suivi dès le premier jour, puis des itérations décidées sur les données réelles des visiteurs.',
+    tags: ['Dashboard', 'Analyse', 'Itérations'],
+  },
+]
+---
+
+<section id="methode" class="paper bg-sand text-ink">
+  <div class="mx-auto max-w-[1600px] px-5 py-16 sm:px-8 lg:px-16 lg:py-20 xl:px-24">
+    <div data-reveal class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="annot text-water">06 · Méthode</p>
+        <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
+          Une méthode en <span class="italic">trois temps</span>.
+        </h2>
+      </div>
+      <a href="/offres" class="annot inline-flex min-h-11 items-center text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
+        Voir les livrables par offre →
+      </a>
+    </div>
+
+    <ol class="mt-12 grid grid-cols-1 border-t border-ink/20 md:grid-cols-3">
+      {
+        STEPS.map((s, i) => (
+          <li data-reveal class={`py-8 md:px-8 ${i ? 'border-t border-ink/20 md:border-l md:border-t-0' : 'md:pl-0'}`}>
+            <p class="flex items-baseline gap-3">
+              <span class="font-mono text-sm text-water">{s.num}</span>
+              <span class="font-fraunces text-3xl font-bold">{s.title}</span>
+            </p>
+            <p class="mt-4 leading-[1.6] text-ink/75">{s.text}</p>
+            <ul class="mt-5 flex flex-wrap gap-2">
+              {s.tags.map((t) => <li class="rounded-sm border border-ink/20 px-2.5 py-1 font-mono text-[11px]">{t}</li>)}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

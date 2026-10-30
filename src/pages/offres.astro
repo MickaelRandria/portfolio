@@ -1,17 +1,162 @@
 ---
 import Base from '../layouts/Base.astro'
-import SectionStub from '../components/SectionStub.astro'
+import Faq from '../components/Faq.astro'
+import Sparkline from '../components/Sparkline.astro'
+import { DELAY_NOTE, OFFERS, PRICE_NOTE } from '../lib/site'
+
+// Déroulé de chaque offre, du cadrage à la passation.
+const METHOD: Record<(typeof OFFERS)[number]['id'], string[]> = {
+  'site-mesure': [
+    'Atelier de cadrage : objectifs, parcours, indicateurs',
+    'Conception et développement du site',
+    'Plan de taggage, consentement et recette des tags',
+    'Mise en ligne et dashboard de suivi',
+  ],
+  'audit-tracking': [
+    'Inventaire des tags, du consentement et des outils',
+    'Diagnostic écrit et priorisé',
+    'Mise en conformité et correction du tracking',
+    'Plan de mesure et documentation',
+  ],
+  'agent-ia': [
+    'Cadrage du cas d’usage et des sources de données',
+    'Prototype testable sur données réelles',
+    'Garde-fous, repli sans LLM et validation humaine',
+    'Mise en production et passation',
+  ],
+}
+
+const INCLUDED = [
+  { title: 'Mesure prévue dès la conception', text: 'Les indicateurs sont fixés au cadrage, pas ajoutés après la mise en ligne.' },
+  { title: 'Conformité vérifiée', text: 'Consentement et cookies testés : ce qui est déclaré conforme est réellement contrôlé.' },
+  { title: 'Documentation livrée', text: 'Plan de taggage et fonctionnement documentés, pour ne dépendre de personne.' },
+]
 ---
 
 <Base
   title="Offres · Site mesuré, audit tracking RGPD, agents IA | Mickael Randrianandraina"
-  description="Site mesuré sur mesure, audit et refonte tracking / RGPD, agents IA et automatisation. Sur devis, après un premier échange de 30 min."
+  description="Site mesuré sur mesure, audit et refonte tracking / RGPD, agents IA et automatisation. Livrables, méthode et délais. Sur devis, après un premier échange de 30 min."
 >
-  <SectionStub
-    num="Offres"
-    title="Ce que vous achetez"
-    todo="01 Site mesuré sur mesure (4 à 6 semaines) · 02 Audit & refonte tracking / RGPD (audit sous 10 jours, conformité 2 à 3 semaines) · 03 Agent IA & automatisation (prototype en 2 à 3 semaines, production 4 à 6 semaines). Livrables, méthode, délais. Pas de prix."
-  >
-    <h1 class="sr-only">Offres</h1>
-  </SectionStub>
+  <section class="grid-tech bg-ink text-sand">
+    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-28 xl:px-24">
+      <p class="annot text-gold">Offres</p>
+      <h1 class="font-fraunces mt-5 max-w-5xl font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 7vw, 6rem)">
+        Ce que vous <span class="italic text-gold">achetez</span>.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-[1.6] text-sand/75">
+        Trois offres, un même principe : ce qui est livré se mesure. Tracking, conformité et
+        suivi de la performance font partie du livrable, pas d'une option.
+      </p>
+      <nav aria-label="Les offres" class="mt-12">
+        <ol class="grid grid-cols-1 border-t border-sand/20 sm:grid-cols-3">
+          {
+            OFFERS.map((o, i) => (
+              <li class={`border-b border-sand/20 ${i ? 'sm:border-l sm:pl-6' : ''}`}>
+                <a href={`#${o.id}`} class="flex min-h-16 items-center gap-4 py-4 hover:text-gold">
+                  <span class="font-mono text-sm text-gold">{o.num}</span>
+                  <span class="font-fraunces text-xl font-semibold">{o.title}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  {
+    OFFERS.map((o, i) => (
+      <section id={o.id} class={`scroll-mt-20 ${i % 2 ? 'bg-ink text-sand' : 'paper bg-sand text-ink'}`}>
+        <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-12 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24 xl:px-24">
+          <div data-reveal class="lg:col-span-5">
+            <p class={`annot ${i % 2 ? 'text-gold' : 'text-water'}`}>
+              Offre {o.num}
+              {i === 0 && ' · Offre principale'}
+            </p>
+            <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">{o.title}</h2>
+            <p class="mt-5 text-lg leading-[1.6] opacity-80">{o.promise}</p>
+
+            <p class="annot mt-10 opacity-60">Pour qui</p>
+            <p class="mt-2 leading-[1.6] opacity-85">{o.forWho}</p>
+
+            <div class={`mt-10 border-t pt-6 ${i % 2 ? 'border-sand/20' : 'border-ink/20'}`}>
+              <p class="annot opacity-60">Délai</p>
+              <p class="mt-2 font-mono text-sm leading-[1.6]">{o.delay}</p>
+              <p class="mt-1 text-xs opacity-65">{DELAY_NOTE}</p>
+              <p class="annot mt-6 opacity-60">Tarif</p>
+              <p class="mt-2 font-mono text-sm">{PRICE_NOTE}</p>
+            </div>
+          </div>
+
+          <div data-reveal class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
+            <div>
+              <h3 class="annot opacity-60">Livrables</h3>
+              <ul class={`mt-4 border-t ${i % 2 ? 'border-sand/20' : 'border-ink/20'}`}>
+                {o.deliverables.map((d) => (
+                  <li class={`flex gap-3 border-b py-3.5 ${i % 2 ? 'border-sand/15' : 'border-ink/15'}`}>
+                    <span class={`mt-2.5 h-px w-3 shrink-0 ${i % 2 ? 'bg-gold' : 'bg-water'}`} aria-hidden="true" />
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 class="annot opacity-60">Méthode</h3>
+              <ol class="mt-4 space-y-4">
+                {METHOD[o.id].map((step, n) => (
+                  <li class="flex gap-4">
+                    <span class={`font-mono text-sm ${i % 2 ? 'text-gold' : 'text-water'}`}>{String(n + 1).padStart(2, '0')}</span>
+                    <span class="leading-[1.5]">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <a
+              href="/contact"
+              class={`inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-sm px-7 font-medium sm:col-span-2 sm:justify-self-start ${i % 2 ? 'bg-sand text-ink' : 'bg-ink text-sand'}`}
+            >
+              Réserver 30 min pour cette offre <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="paper bg-sand text-ink">
+    <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-24 xl:px-24">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="annot text-water">Dans chaque offre</p>
+          <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05] lg:text-5xl">Toujours inclus.</h2>
+        </div>
+        <Sparkline class="h-12 w-48 text-water" />
+      </div>
+      <ul class="mt-10 grid grid-cols-1 border-t border-ink/20 md:grid-cols-3">
+        {
+          INCLUDED.map((item, i) => (
+            <li data-reveal class={`py-8 md:px-8 ${i ? 'border-t border-ink/20 md:border-l md:border-t-0' : 'md:pl-0'}`}>
+              <h3 class="font-fraunces text-2xl font-bold">{item.title}</h3>
+              <p class="mt-3 leading-[1.6] text-ink/75">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-ink text-sand">
+    <div class="mx-auto grid max-w-[1600px] grid-cols-1 gap-10 px-5 py-20 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-16 lg:py-24 xl:px-24">
+      <div class="lg:col-span-4">
+        <p class="annot text-gold">Questions fréquentes</p>
+        <h2 class="font-fraunces mt-4 text-4xl font-bold leading-[1.05]">Avant de se lancer</h2>
+        <a href="/contact" class="mt-8 inline-flex min-h-12 items-center rounded-sm bg-sand px-7 font-medium text-ink">
+          Réserver 30 min
+        </a>
+      </div>
+      <div class="lg:col-span-7 lg:col-start-6">
+        <Faq />
+      </div>
+    </div>
+  </section>
 </Base>

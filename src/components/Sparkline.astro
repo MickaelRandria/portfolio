@@ -1,0 +1,42 @@
+---
+/**
+ * Courbe au trait fin, élément de décor de la signature graphique. Purement
+ * décorative : aucune valeur, aucun axe, masquée aux lecteurs d'écran.
+ * `points` sont des hauteurs relatives (0 à 1), réparties sur la largeur.
+ */
+interface Props {
+  points?: number[]
+  class?: string
+  /** Point marqué en fin de courbe, comme sur un graphique d'analyste. */
+  dot?: boolean
+}
+
+const {
+  points = [0.62, 0.58, 0.66, 0.52, 0.55, 0.44, 0.48, 0.36, 0.4, 0.28, 0.31, 0.18],
+  class: className = '',
+  dot = true,
+} = Astro.props
+
+const W = 240
+const H = 60
+const step = W / (points.length - 1)
+const coords = points.map((p, i) => [+(i * step).toFixed(1), +(p * H).toFixed(1)] as const)
+const d = coords.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join(' ')
+const [lx, ly] = coords[coords.length - 1]
+---
+
+<svg
+  viewBox={`-4 -4 ${W + 8} ${H + 8}`}
+  class={className}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.25"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  preserveAspectRatio="none"
+>
+  <path d={d} vector-effect="non-scaling-stroke"></path>
+  {dot && <circle cx={lx} cy={ly} r="3" fill="currentColor" stroke="none"></circle>}
+</svg>
