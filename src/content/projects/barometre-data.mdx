@@ -1,0 +1,42 @@
+---
+title: Baromètre Data
+section: lab
+order: 1
+typology: Agent IA
+client: Master Data Marketing & IA
+year: '2026'
+value: Un agent marketing qui croise brief, météo live et attention collective pour dire si un message tombe au bon moment.
+metric: 10 modules d'agent, 2 sources de données live, repli déterministe si le LLM ne répond pas.
+context: >-
+  La plupart des campagnes sont planifiées sans regarder le contexte dans lequel elles seront reçues. Il
+  fallait un outil qui lise ce contexte au moment de l'envoi et en tire des décisions, sans inventer de
+  données ni dépendre aveuglément d'un LLM.
+result: >-
+  L'agent est déployé et utilisable en ligne : un brief produit un diagnostic complet, du score de
+  réceptivité jusqu'au plan A/B test. Le projet est accompagné d'un livre blanc.
+stack: [React, Node.js, Mistral, Open-Meteo, Wikimedia]
+status: Agent opérationnel · LLM Mistral
+video: /barometre-data.mp4
+liveUrl: https://barometre-data.vercel.app
+githubUrl: https://github.com/MickaelRandria/Barometre_Data
+---
+
+### Un pipeline de dix modules
+
+Contexte, prédiction, détection d'écarts, recommandation, variantes, activation, A/B test, garde-fous,
+revue de score et apprentissage : chaque étape est un module Node.js isolé et testé, orchestré par un
+endpoint unique.
+
+### Un LLM en second avis
+
+Ministral 8B relit le score et génère des variantes de message. Le client LLM ne lève jamais d'exception :
+en cas d'échec, l'agent rend son résultat déterministe.
+
+### Des données live, signalées comme telles
+
+Météo Open-Meteo et pages vues Wikimedia, agrégées par axe d'intention (7 jours comparés à 90). Tout repli
+est affiché comme une estimation, jamais comme une donnée live.
+
+### Une conformité qui ne ment pas
+
+Les garde-fous RGPD distinguent ce que l'agent contrôle réellement de ce qui reste à valider par un humain.

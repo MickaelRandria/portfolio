@@ -1,0 +1,33 @@
+---
+title: TimeSpeech
+section: lab
+order: 3
+typology: Prototype UX IA
+client: Projet ESD Bordeaux
+year: '2026'
+value: Un assistant qui génère un cours à partir d'un brief et calibre sa durée sur le débit de parole de l'enseignant.
+metric: 10 écrans, construits par un pipeline de 4 agents Claude Code.
+context: >-
+  Les enseignants vacataires préparent leurs cours seuls, sur un temps contraint, et découvrent en salle que
+  le contenu ne tient pas dans le créneau. Les outils de génération de slides ignorent la question du temps.
+result: >-
+  Un concept produit complet, démontrable de bout en bout sur des données simulées : de quoi juger
+  l'expérience avant d'investir dans la génération réelle et la mesure vocale.
+stack: [React, TypeScript, Tailwind, Framer Motion]
+status: Prototype UX · données simulées
+video: /timespeech.mp4
+githubUrl: https://github.com/MickaelRandria/TimeSpeech
+---
+
+### Un affinage conversationnel
+
+Format, type de séance, objectif pédagogique : chaque réponse recompose le plan minuté en direct.
+
+### La durée calibrée sur la voix
+
+Après la mesure du débit en mots par minute, la durée estimée du cours se met à jour à l'écran.
+
+### Construit avec des agents
+
+Le front a été produit par un pipeline séquentiel de quatre sous-agents Claude Code : design system,
+écrans, intégration du parcours, puis revue QA avant chaque démo.

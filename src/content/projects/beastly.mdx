@@ -1,0 +1,37 @@
+---
+title: Beastly Creator Portal
+section: lab
+order: 2
+typology: Agent de casting
+client: Beastly · projet RNCP Data
+year: '2026'
+value: Une plateforme d'influence avec un agent de casting qui présélectionne les créateurs adaptés à un brief.
+metric: 3 espaces dans un seul outil (équipe, créateur, accueil le jour J), agent de casting en 3 étapes.
+context: >-
+  Une agence d'influence jongle entre des centaines de créateurs, des briefs de marques et des événements
+  terrain, et sélectionne encore les profils à la main. Il fallait un outil commun à l'équipe, aux créateurs
+  et à l'accueil des événements.
+result: >-
+  Le parcours complet est démontrable, du brief jusqu'au scan du QR code le jour de l'événement. L'agent est
+  volontairement simulé à ce stade : le produit valide l'usage avant de brancher les appels réels.
+stack: [React, TypeScript, force-graph, PWA]
+status: Prototype · agent simulé
+video: /beastly.mp4
+liveUrl: https://beastly-creator-portal.vercel.app
+githubUrl: https://github.com/MickaelRandria/beastly-creator-portal-
+---
+
+### Un agent de casting en trois temps
+
+Scan des profils, scoring par rapport au brief, sélection argumentée. Les étapes sont simulées côté front ;
+l'architecture prévoit de brancher un scraper et Gemini.
+
+### Un graphe réseau par niches
+
+Visualisation force-graph des créateurs, en nuage ou en clusters, filtrable par niche, plateforme et
+taille d'audience.
+
+### Un portail créateur par lien unique
+
+Chaque créateur reçoit un lien vers son espace événement : confirmation, brief, idées de contenus, assets,
+upload et QR code d'accès scanné par l'équipe à l'entrée.

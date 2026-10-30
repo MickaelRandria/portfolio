@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design system : tokens
+   Bichromie stricte encre / crème + un accent clair (or). La couleur vient
+   des visuels projets, pas de l'interface. `water` reste réservé au focus
+   et aux liens sur fond clair (contraste AA sur crème).
+   Chaque --color-X génère bg-X, text-X, border-X ; chaque --font-X font-X.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #0f1b2d;      /* fond sombre principal, texte sur crème */
+  --color-ink-2: #13233a;    /* surface légèrement relevée sur fond encre */
+  --color-sand: #f4ebd9;     /* fond clair, texte sur encre */
+  --color-sand-2: #eae0cc;   /* surface relevée sur crème */
+  --color-gold: #d9c5a0;     /* accent clair : eyebrows, italiques, traits */
+  --color-water: #2e6f8e;    /* focus et liens sur crème uniquement */
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Micro-labels, eyebrows, numéros de section, chiffres, métadonnées */
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-sand);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-water);
+    color: var(--color-sand);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-water);
+    outline-offset: 3px;
+  }
+}
+
+/* Fraunces est variable : optical sizing automatique et ligatures pour un
+   rendu éditorial des titres. Les italiques servent d'accent. */
+.font-fraunces {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-feature-settings: "liga" 1, "dlig" 1;
+}
+
+/* ------------------------------------------------------------------
+   Signature graphique : elle vient de la donnée, pas d'objets décoratifs.
+   ------------------------------------------------------------------ */
+
+/* Annotation façon analyste : micro-label mono (eyebrows, métadonnées). */
+.annot {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Grain papier sur les fonds crème. Limité à la section (pas de calque
+   plein écran fixe), donc sans coût de repeinture au scroll. */
+.paper {
+  position: relative;
+  isolation: isolate;
+}
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Grille technique discrète en fond de section, dans la couleur du texte. */
+.grid-tech {
+  background-image:
+    linear-gradient(color-mix(in srgb, currentColor 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, currentColor 7%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+}
+
+/* Crop marks : angles d'encadrement imprimeur autour d'un visuel projet.
+   Tracés en dehors du cadre, dans la couleur du texte. */
+.crop {
+  position: relative;
+  --crop-len: 14px;
+  --crop-gap: 10px;
+}
+.crop::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--crop-gap) * -1);
+  pointer-events: none;
+  --m: color-mix(in srgb, currentColor 55%, transparent);
+  background:
+    linear-gradient(var(--m), var(--m)) top left / var(--crop-len) 1px,
+    linear-gradient(var(--m), var(--m)) top left / 1px var(--crop-len),
+    linear-gradient(var(--m), var(--m)) top right / var(--crop-len) 1px,
+    linear-gradient(var(--m), var(--m)) top right / 1px var(--crop-len),
+    linear-gradient(var(--m), var(--m)) bottom left / var(--crop-len) 1px,
+    linear-gradient(var(--m), var(--m)) bottom left / 1px var(--crop-len),
+    linear-gradient(var(--m), var(--m)) bottom right / var(--crop-len) 1px,
+    linear-gradient(var(--m), var(--m)) bottom right / 1px var(--crop-len);
+  background-repeat: no-repeat;
+}
+
+/* Reveal au scroll : déclenché à 20 % de viewport (voir Reveal.astro), jamais
+   d'écran vide. Sans JS ou en mouvement réduit, le contenu reste visible. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s cubic-bezier(0.6, 0.01, 0.05, 0.95),
+      transform 0.7s cubic-bezier(0.6, 0.01, 0.05, 0.95);
+  }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

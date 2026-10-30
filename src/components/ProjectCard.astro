@@ -1,0 +1,73 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import LazyVideo from './LazyVideo'
+import MediaPlaceholder from './MediaPlaceholder'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  /** Fond de la section qui accueille la carte. */
+  tone?: 'light' | 'dark'
+}
+
+const { project, tone = 'light' } = Astro.props
+const p = project.data
+const base = p.section === 'lab' ? '/lab' : '/realisations'
+const caseUrl = `${base}/${project.id}`
+const muted = tone === 'light' ? 'text-ink/70' : 'text-sand/70'
+const rule = tone === 'light' ? 'border-ink/15' : 'border-sand/15'
+---
+
+<!-- Gabarit de carte unique, Réalisations et Lab : visuel pleine largeur,
+     typologie, client, une ligne de valeur, le chiffre, deux CTA. -->
+<article data-reveal class={`grid grid-cols-1 gap-8 border-t ${rule} py-12 lg:grid-cols-12 lg:gap-12 lg:py-16`}>
+  <div class="crop lg:col-span-7">
+    {
+      p.video ? (
+        <LazyVideo
+          client:visible
+          src={p.video}
+          label={`Aperçu vidéo du projet ${p.title}`}
+          className="block aspect-[16/10] w-full rounded-sm object-cover"
+        />
+      ) : (
+        <MediaPlaceholder title={p.title} tone={tone} className="aspect-[16/10] rounded-sm" />
+      )
+    }
+  </div>
+
+  <div class="flex flex-col lg:col-span-5">
+    <p class={`annot ${muted}`}>
+      {p.typology} · {p.client} · {p.year}
+    </p>
+    {p.status && <p class="annot mt-2 text-gold">{p.status}</p>}
+    <h3 class="font-fraunces mt-5 text-4xl font-bold leading-[1.05] tracking-tight lg:text-5xl">
+      {p.title}
+    </h3>
+    <p class={`mt-4 text-[1.0625rem] leading-[1.6] ${muted}`}>{p.value}</p>
+
+    <p class={`mt-8 border-l-2 border-gold pl-4 font-mono text-sm leading-[1.6]`}>
+      {p.metric}
+    </p>
+
+    <div class="mt-10 flex flex-wrap gap-3 lg:mt-auto lg:pt-10">
+      <a
+        href={caseUrl}
+        class={`inline-flex min-h-11 items-center rounded-sm px-6 text-sm font-medium ${tone === 'light' ? 'bg-ink text-sand' : 'bg-sand text-ink'}`}
+      >
+        Lire le case study
+      </a>
+      {
+        p.liveUrl && (
+          <a
+            href={p.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`inline-flex min-h-11 items-center rounded-sm border px-6 text-sm ${tone === 'light' ? 'border-ink/40' : 'border-sand/40'}`}
+          >
+            Voir le site live
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

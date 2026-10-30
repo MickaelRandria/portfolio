@@ -1,13 +1,3 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
-  "headers": [
-    {
-      "source": "/pour-aloha-immo",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
-    },
-    {
-      "source": "/pour-emmy-prestigerent",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
-    }
-  ]
+  "framework": "astro"
 }

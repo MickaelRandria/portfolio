@@ -1,0 +1,130 @@
+---
+import { render, type CollectionEntry } from 'astro:content'
+import Base from '../layouts/Base.astro'
+import LazyVideo from './LazyVideo'
+import MediaPlaceholder from './MediaPlaceholder'
+
+interface Props {
+  project: CollectionEntry<'projects'>
+  next: CollectionEntry<'projects'>
+}
+
+const { project, next } = Astro.props
+const p = project.data
+const { Content } = await render(project)
+const base = p.section === 'lab' ? '/lab' : '/realisations'
+const site = Astro.site!.href.replace(/\/$/, '')
+
+const jsonLd = [
+  {
+    '@type': 'CreativeWork',
+    name: p.title,
+    description: p.value,
+    dateCreated: p.year,
+    creator: { '@id': `${site}/#person` },
+    ...(p.liveUrl ? { url: p.liveUrl } : {}),
+  },
+]
+---
+
+<Base title={`${p.title} · ${p.typology} | Mickael Randrianandraina`} description={p.value} jsonLd={jsonLd}>
+  <article class="bg-ink text-sand">
+    <div class="mx-auto max-w-[1280px] px-5 pb-24 pt-16 sm:px-8 lg:pt-24">
+      <!-- 1. Titre + typologie + client + année -->
+      <header>
+        <p class="annot text-gold">{p.typology} · {p.client} · {p.year}</p>
+        {p.status && <p class="annot mt-2 text-sand/60">{p.status}</p>}
+        <h1
+          class="font-fraunces mt-6 font-bold leading-[1.02] tracking-tight"
+          style="font-size: clamp(2.5rem, 7vw, 6rem)"
+        >
+          {p.title}
+        </h1>
+        <p class="mt-6 max-w-2xl text-lg leading-[1.6] text-sand/75">{p.value}</p>
+      </header>
+
+      <!-- 2. Visuel pleine largeur -->
+      <div class="crop mt-14">
+        {
+          p.video ? (
+            <LazyVideo
+              client:visible
+              src={p.video}
+              label={`Aperçu vidéo du projet ${p.title}`}
+              className="block aspect-[16/10] w-full rounded-sm object-cover"
+            />
+          ) : (
+            <MediaPlaceholder title={p.title} className="aspect-[16/10] rounded-sm" />
+          )
+        }
+      </div>
+
+      <!-- 3. Contexte -->
+      <section data-reveal class="mt-24 grid gap-6 lg:grid-cols-12">
+        <h2 class="annot text-gold lg:col-span-3">01 · Contexte</h2>
+        <p class="font-fraunces text-2xl leading-[1.35] lg:col-span-9 lg:text-3xl">{p.context}</p>
+      </section>
+
+      <!-- 4. Ce que j'ai fait (corps MDX) -->
+      <section data-reveal class="mt-24 grid gap-6 lg:grid-cols-12">
+        <h2 class="annot text-gold lg:col-span-3">02 · Ce que j'ai fait</h2>
+        <div
+          class="case-body grid gap-10 sm:grid-cols-2 lg:col-span-9 [&_code]:font-mono [&_code]:text-gold [&_h3]:font-fraunces [&_h3]:text-xl [&_h3]:font-semibold [&_p]:mt-2 [&_p]:leading-[1.65] [&_p]:text-sand/75"
+        >
+          <Content />
+        </div>
+      </section>
+
+      <!-- 5. Résultat chiffré -->
+      <section data-reveal class="mt-24 grid gap-6 border-t border-gold/20 pt-12 lg:grid-cols-12">
+        <h2 class="annot text-gold lg:col-span-3">03 · Résultat</h2>
+        <div class="lg:col-span-9">
+          <p class="font-mono text-xl leading-[1.5] text-gold lg:text-2xl">{p.metric}</p>
+          <p class="mt-6 max-w-3xl leading-[1.7] text-sand/80">{p.result}</p>
+        </div>
+      </section>
+
+      <!-- 6. Stack technique -->
+      <section data-reveal class="mt-24 grid gap-6 lg:grid-cols-12">
+        <h2 class="annot text-gold lg:col-span-3">04 · Stack</h2>
+        <ul class="flex flex-wrap gap-2 lg:col-span-9">
+          {p.stack.map((tech) => <li class="rounded-sm border border-sand/25 px-3 py-1.5 font-mono text-xs">{tech}</li>)}
+        </ul>
+      </section>
+
+      <!-- 7. CTA : site live + projet suivant -->
+      <nav aria-label="Suite" class="mt-24 grid gap-6 border-t border-gold/20 pt-12 sm:grid-cols-2">
+        <div class="flex flex-wrap gap-3">
+          {
+            p.liveUrl && (
+              <a
+                href={p.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center rounded-sm bg-sand px-7 font-medium text-ink"
+              >
+                Voir le site live
+              </a>
+            )
+          }
+          {
+            p.githubUrl && (
+              <a
+                href={p.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-12 items-center rounded-sm border border-sand/40 px-7"
+              >
+                Code sur GitHub
+              </a>
+            )
+          }
+        </div>
+        <a href={`${base}/${next.id}`} class="group sm:text-right">
+          <span class="annot text-sand/50">Projet suivant →</span>
+          <span class="font-fraunces mt-2 block text-2xl font-semibold group-hover:text-gold">{next.data.title}</span>
+        </a>
+      </nav>
+    </div>
+  </article>
+</Base>

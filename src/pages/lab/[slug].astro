@@ -1,0 +1,10 @@
+---
+import CaseStudy from '../../components/CaseStudy.astro'
+import { caseStudyPaths } from '../../lib/projects'
+
+export const getStaticPaths = () => caseStudyPaths('lab')
+
+const { project, next } = Astro.props
+---
+
+<CaseStudy project={project} next={next} />
