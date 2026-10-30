@@ -14,6 +14,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { EASE } from '../lib/motion'
 import type { Project } from '../data/projects'
+import { posterFor } from '../lib/media'
 import MediaPlaceholder from './MediaPlaceholder'
 import PipelineSteps from './PipelineSteps'
 
@@ -184,6 +185,7 @@ export default function ProjectModal({
                     <video
                       className="aspect-[4/3] w-full object-cover sm:aspect-[16/10]"
                       autoPlay={!reduce}
+                      poster={posterFor(project.videoSrc)}
                       loop
                       muted
                       playsInline

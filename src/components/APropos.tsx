@@ -2,9 +2,9 @@ import { motion } from 'motion/react'
 import { fadeUp, lineContainer, lineReveal, staggerContainer } from '../lib/motion'
 
 const NOW = [
-  'Apprentissage Web Analyst chez Cultura',
+  'Disponible en freelance, à Bordeaux et en remote',
   'M2 Data Marketing IA à Bordeaux',
-  'Projets freelance en parallèle',
+  'Alternance Web Analyst chez Cultura terminée en octobre 2026',
 ] as const
 
 export default function APropos() {

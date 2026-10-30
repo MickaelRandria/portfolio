@@ -39,6 +39,60 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600;1,9..144,700&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Données structurées : Person + ProfessionalService (SEO local Bordeaux).
+         Volontairement sans priceRange : aucun prix n'est affiché sur le site. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://portfolio-mickaelrandria.vercel.app/#person",
+            "name": "Mickael Randrianandraina",
+            "jobTitle": "Web Analyst Digital",
+            "url": "https://portfolio-mickaelrandria.vercel.app/",
+            "email": "mailto:mickarandrianan@gmail.com",
+            "image": "https://portfolio-mickaelrandria.vercel.app/photo-mickael.webp",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bordeaux",
+              "addressCountry": "FR"
+            },
+            "knowsAbout": [
+              "Web analytics",
+              "Adobe Analytics",
+              "Commanders Act",
+              "Conformité RGPD et cookies",
+              "Looker Studio",
+              "React",
+              "Node.js",
+              "Agents LLM"
+            ],
+            "sameAs": ["https://github.com/MickaelRandria"]
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://portfolio-mickaelrandria.vercel.app/#service",
+            "name": "Mickael Randrianandraina, Web Analyst freelance",
+            "description": "Sites qui se mesurent : tracking, conformité RGPD et mesure de la performance livrés dedans.",
+            "url": "https://portfolio-mickaelrandria.vercel.app/",
+            "email": "mickarandrianan@gmail.com",
+            "image": "https://portfolio-mickaelrandria.vercel.app/photo-mickael.webp",
+            "founder": { "@id": "https://portfolio-mickaelrandria.vercel.app/#person" },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Bordeaux",
+              "addressCountry": "FR"
+            },
+            "areaServed": [
+              { "@type": "City", "name": "Bordeaux" },
+              { "@type": "Country", "name": "France" }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

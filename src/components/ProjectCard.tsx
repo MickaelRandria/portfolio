@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import { fadeUp } from '../lib/motion'
 import type { Project } from '../data/projects'
+import LazyVideo from './LazyVideo'
 import MediaPlaceholder from './MediaPlaceholder'
 
 /** Petit point coloré du badge, décliné par position dans la grille. */
@@ -15,35 +15,8 @@ export interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index, onOpen }: ProjectCardProps) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const prefersReduced = useReducedMotion()
   const dotClass = DOT_CLASSES[index % DOT_CLASSES.length]
   const stack = project.metadata.stack.split(',').map((tech) => tech.trim())
-
-  // La vidéo ne joue que lorsqu'elle entre dans la viewport (économie de bande
-  // passante + perf). Pas d'autoplay si l'utilisateur préfère réduire les animations.
-  useEffect(() => {
-    const el = videoRef.current
-    if (!el) return
-    el.muted = true
-    if (prefersReduced) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            void el.play().catch(() => undefined)
-          } else {
-            el.pause()
-          }
-        }
-      },
-      { threshold: 0.35 },
-    )
-
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [prefersReduced])
 
   return (
     <motion.button
@@ -78,17 +51,11 @@ export default function ProjectCard({ project, index, onOpen }: ProjectCardProps
       {/* Vidéo : démarrée par l'IntersectionObserver, jamais préchargée en entier */}
       {project.videoSrc ? (
         <div className="mt-6 overflow-hidden rounded-[4px] border border-ink/15">
-          <video
-            ref={videoRef}
+          <LazyVideo
+            src={project.videoSrc}
+            label={`Aperçu vidéo du projet ${project.title}`}
             className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            aria-label={`Aperçu vidéo du projet ${project.title}`}
-          >
-            <source src={project.videoSrc} type="video/mp4" />
-          </video>
+          />
         </div>
       ) : (
         <MediaPlaceholder

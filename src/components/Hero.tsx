@@ -23,7 +23,7 @@ export default function Hero() {
 
   // Photo détourée (fond transparent) : avec le duotone, les cheveux/ombres
   // virent à l'encre et se fondent dans le fond. Fallback placeholder si absente.
-  const [photoSrc, setPhotoSrc] = useState('/photo-mickael-nobg.png')
+  const [photoSrc, setPhotoSrc] = useState('/photo-mickael.webp')
 
   return (
     <section
@@ -122,7 +122,10 @@ export default function Hero() {
                 onError={() => setPhotoSrc('/photo-mickael.svg')}
                 alt="Mickael, Web Analyst Digital"
                 className="duotone h-full w-full object-cover object-[center_top]"
+                width={960}
+                height={1200}
                 loading="eager"
+                fetchPriority="high"
               />
             </motion.figure>
           </div>

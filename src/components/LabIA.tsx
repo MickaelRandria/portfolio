@@ -1,5 +1,6 @@
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
+import LazyVideo from './LazyVideo'
 import MediaPlaceholder from './MediaPlaceholder'
 import PipelineSteps from './PipelineSteps'
 import ProjectModal from './ProjectModal'
@@ -239,8 +240,6 @@ function StackList({ stack, className = '' }: { stack: string; className?: strin
 
 /** Vidéo d'aperçu si fournie, placeholder sinon (même ratio 16/10). */
 function LabMedia({ project }: { project: Project }) {
-  const reduce = useReducedMotion()
-
   if (!project.videoSrc) {
     return (
       <MediaPlaceholder title={project.title} className="aspect-[16/10] rounded-[4px]" />
@@ -249,17 +248,11 @@ function LabMedia({ project }: { project: Project }) {
 
   return (
     <div className="overflow-hidden rounded-[4px] border border-sand/10">
-      <video
+      <LazyVideo
+        src={project.videoSrc}
+        label={`Aperçu vidéo du projet ${project.title}`}
         className="aspect-[16/10] w-full object-cover"
-        autoPlay={!reduce}
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        aria-label={`Aperçu vidéo du projet ${project.title}`}
-      >
-        <source src={project.videoSrc} type="video/mp4" />
-      </video>
+      />
     </div>
   )
 }
