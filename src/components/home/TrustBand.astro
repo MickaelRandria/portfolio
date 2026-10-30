@@ -1,12 +1,13 @@
 ---
 /**
  * Bandeau de confiance. Micro-label honnête sur la nature du lien.
- * TODO logos : déposer les fichiers dans /public/logos/ et renseigner `logo`
- * (ex. '/logos/cultura.svg') ; en attendant, le nom s'affiche en texte.
+ * Logos en encre monochrome sur fond transparent (/public/logo/*.webp) ;
+ * `withName` ajoute le nom à côté d'un symbole seul. Sans logo, le nom
+ * s'affiche en texte.
  */
-const ITEMS: { name: string; kind: string; logo?: string }[] = [
-  { name: 'Cultura', kind: 'En poste · 2024–2026' },
-  { name: 'La Poste', kind: 'En poste · 2023–2024' },
+const ITEMS: { name: string; kind: string; logo?: string; width?: number; withName?: boolean }[] = [
+  { name: 'Cultura', kind: 'En poste · 2024–2026', logo: '/logo/cultura.webp', width: 316 },
+  { name: 'La Poste', kind: 'En poste · 2023–2024', logo: '/logo/laposte.webp', width: 176, withName: true },
   { name: 'PrestigeRent', kind: 'En mission' },
   { name: 'Petite Maille', kind: 'En mission' },
   { name: 'Beastly', kind: 'Projet RNCP' },
@@ -24,9 +25,18 @@ const ITEMS: { name: string; kind: string; logo?: string }[] = [
             <ul class="flex shrink-0 items-center" aria-hidden={copy === 1 ? 'true' : undefined}>
               {ITEMS.map((item) => (
                 <li class="flex items-center gap-4 px-8">
-                  {item.logo ? (
-                    <img src={item.logo} alt={item.name} class="h-7 w-auto opacity-80" loading="lazy" />
-                  ) : (
+                  {item.logo && (
+                    <img
+                      src={item.logo}
+                      alt={item.withName ? '' : item.name}
+                      width={item.width}
+                      height={80}
+                      class="h-7 w-auto shrink-0 opacity-85"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  {(!item.logo || item.withName) && (
                     <span class="font-fraunces text-2xl font-semibold whitespace-nowrap">{item.name}</span>
                   )}
                   <span class="annot whitespace-nowrap text-ink/55">{item.kind}</span>
