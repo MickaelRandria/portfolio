@@ -13,7 +13,7 @@ interface Props {
 const { project, next } = Astro.props
 const p = project.data
 const { Content } = await render(project)
-const base = p.section === 'lab' ? '/lab' : '/realisations'
+const base = p.section === 'agentique' ? '/agentique-ia' : '/realisations'
 const site = Astro.site!.href.replace(/\/$/, '')
 
 // Vue experte : le public visé fixe le vocabulaire et la mise en forme.

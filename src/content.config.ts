@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
 /**
- * Une seule collection pour les Réalisations ET le Lab : le schéma est donc
+ * Une seule collection pour les Réalisations ET l'Agentique IA : le schéma est donc
  * strictement identique, ce qui garantit le gabarit de carte et de case study
  * unique. `section` décide seulement où le projet apparaît.
  *
@@ -15,7 +15,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    section: z.enum(['realisations', 'lab']),
+    section: z.enum(['realisations', 'agentique']),
     /** Ordre d'affichage dans sa section. */
     order: z.number().int(),
     /** Typologie affichée en micro-label mono (ex. « Conformité RGPD & SEO local »). */

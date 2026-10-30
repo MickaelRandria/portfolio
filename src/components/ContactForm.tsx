@@ -25,6 +25,11 @@ const GHOST_BTN =
 
 const PROJECT_OPTIONS: { value: ProjectType; title: string; subtitle: string }[] = [
   {
+    value: 'agent',
+    title: 'Un agent IA ou une automatisation',
+    subtitle: 'Transformer vos données ou votre reporting en décisions.',
+  },
+  {
     value: 'site',
     title: 'Un site mesuré sur mesure',
     subtitle: 'Site, plan de taggage, conformité cookies et dashboard de suivi.',
@@ -33,11 +38,6 @@ const PROJECT_OPTIONS: { value: ProjectType; title: string; subtitle: string }[]
     value: 'audit-tracking',
     title: 'Un audit tracking / RGPD',
     subtitle: 'Diagnostic de votre site actuel, mise en conformité, plan de mesure.',
-  },
-  {
-    value: 'agent',
-    title: 'Un agent IA ou une automatisation',
-    subtitle: 'Transformer vos données ou votre reporting en décisions.',
   },
   {
     value: 'echange',
@@ -81,11 +81,9 @@ export default function ContactForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  // Pré-cochée en arrivant d'un lien « recevoir les fourchettes » (/contact?fourchettes=1).
-  // La case n'apparaît qu'à l'étape 3 : pas d'écart entre rendu serveur et hydratation.
-  const [wantsRanges, setWantsRanges] = useState(
-    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('fourchettes'),
-  )
+  const [wantsRanges, setWantsRanges] = useState(false)
+  // Le visiteur a-t-il déjà touché la case ? Si non, le lien d'arrivée décide.
+  const [rangesTouched, setRangesTouched] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -114,6 +112,12 @@ export default function ContactForm() {
   function goTo(target: Step) {
     setDirection(target > step ? 1 : -1)
     setStep(target)
+    // Arrivée depuis un lien « recevoir les fourchettes » (/contact?fourchettes=1) :
+    // la case est pré-cochée en entrant à l'étape 3, dans un gestionnaire
+    // d'événement, donc sans écart entre rendu serveur et hydratation.
+    if (target === 3 && !rangesTouched && new URLSearchParams(window.location.search).has('fourchettes')) {
+      setWantsRanges(true)
+    }
   }
 
   async function submit() {
@@ -163,6 +167,7 @@ export default function ContactForm() {
     setEmail('')
     setPhone('')
     setWantsRanges(false)
+    setRangesTouched(false)
     setErrorMessage('')
   }
 
@@ -362,7 +367,10 @@ export default function ContactForm() {
                       name="fourchettes"
                       type="checkbox"
                       checked={wantsRanges}
-                      onChange={(e) => setWantsRanges(e.target.checked)}
+                      onChange={(e) => {
+                        setRangesTouched(true)
+                        setWantsRanges(e.target.checked)
+                      }}
                       className="mt-0.5 h-5 w-5 shrink-0 accent-ink"
                     />
                     <span className="text-sm leading-[1.5] text-ink/80">

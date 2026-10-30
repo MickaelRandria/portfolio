@@ -2,7 +2,7 @@ import { ImageIcon } from 'lucide-react'
 
 interface MediaPlaceholderProps {
   title: string
-  /** Fond clair (cards sable) ou sombre (Lab IA, modal). */
+  /** Fond clair (cards sable) ou sombre (Agentique IA). */
   tone?: 'light' | 'dark'
   className?: string
 }

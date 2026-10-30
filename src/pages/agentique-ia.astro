@@ -4,10 +4,10 @@ import ProjectCard from '../components/ProjectCard.astro'
 import PipelineSteps from '../components/PipelineSteps.astro'
 import { getSection } from '../lib/projects'
 
-const lab = await getSection('lab')
-const featured = lab.find((p) => p.data.pipeline)
+const agents = await getSection('agentique')
+const featured = agents.find((p) => p.data.pipeline)
 
-// Principes tirés de la façon dont les projets du Lab sont réellement construits.
+// Principes tirés de la façon dont les projets agentiques sont réellement construits.
 const PRINCIPLES = [
   {
     title: 'Le LLM en second avis',
@@ -29,12 +29,12 @@ const PRINCIPLES = [
 ---
 
 <Base
-  title="Lab IA · Agents et automatisations | Mickael Randrianandraina"
-  description="Agents LLM et automatisations qui transforment la donnée en décision : Baromètre Data, Beastly Creator Portal, TimeSpeech. Démos testables."
+  title="Agentique IA · Agents LLM et automatisations | Mickael Randrianandraina"
+  description="Agentique IA : agents LLM et automatisations qui transforment la donnée en décision. Baromètre Data, Beastly Creator Portal, TimeSpeech, démos testables."
 >
   <section class="grid-tech bg-ink text-sand">
     <div class="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 lg:px-16 lg:py-28 xl:px-24">
-      <p class="annot text-gold">Lab IA &amp; Data</p>
+      <p class="annot text-gold">Agentique IA</p>
       <h1 class="font-fraunces mt-5 font-bold leading-[1.02] tracking-tight" style="font-size: clamp(2.5rem, 7vw, 6rem)">
         Des agents qui <span class="italic text-gold">décident</span>.
       </h1>
@@ -44,7 +44,7 @@ const PRINCIPLES = [
         ligne.
       </p>
       <div class="mt-12">
-        {lab.map((project, i) => <ProjectCard project={project} tone="dark" index={i + 1} headingLevel={2} />)}
+        {agents.map((project, i) => <ProjectCard project={project} tone="dark" index={i + 1} headingLevel={2} />)}
       </div>
     </div>
   </section>

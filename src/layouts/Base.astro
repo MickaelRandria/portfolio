@@ -21,9 +21,9 @@ const site = Astro.site!.href.replace(/\/$/, '')
 const canonical = new URL(Astro.url.pathname, Astro.site).href
 
 const NAV = [
+  { label: 'Agentique IA', href: '/agentique-ia' },
   { label: 'Offres', href: '/offres' },
   { label: 'Réalisations', href: '/#realisations' },
-  { label: 'Lab IA', href: '/lab' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -58,7 +58,7 @@ const graph = {
       '@id': `${site}/#service`,
       name: 'Mickael Randrianandraina, Web Analyst freelance',
       description:
-        'Des sites qui se mesurent : tracking, conformité RGPD et mesure de la performance livrés dedans.',
+        'Agentique IA : agents LLM et automatisations qui transforment la donnée en décisions. Et des sites qui se mesurent, tracking et conformité RGPD livrés dedans.',
       url: `${site}/`,
       email: EMAIL,
       image: `${site}/photo-mickael.webp`,
@@ -188,9 +188,9 @@ const graph = {
         <div class="flex flex-wrap justify-between gap-4 border-t border-sand/15 pt-6 lg:col-span-12">
           <p class="annot text-sand/50">© {new Date().getFullYear()} Mickael Randrianandraina · Bordeaux, France</p>
           <ul class="annot flex flex-wrap gap-x-6 text-sand/50">
+            <li><a href="/agentique-ia" class="inline-flex min-h-11 items-center hover:text-sand">Agentique IA</a></li>
             <li><a href="/offres" class="inline-flex min-h-11 items-center hover:text-sand">Offres</a></li>
             <li><a href="/#realisations" class="inline-flex min-h-11 items-center hover:text-sand">Réalisations</a></li>
-            <li><a href="/lab" class="inline-flex min-h-11 items-center hover:text-sand">Lab IA</a></li>
           </ul>
         </div>
       </div>

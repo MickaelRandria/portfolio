@@ -21,11 +21,25 @@ export const CHANNELS: { label: string; href: string | null; external?: boolean 
 /** Profils publics, repris dans `sameAs` du JSON-LD. */
 export const SAME_AS = CHANNELS.filter((c) => c.external && c.href).map((c) => c.href as string)
 
-/** Les 3 offres, dans l'ordre de la hiérarchie du brief. Aucun prix, nulle part. */
+/** Les 3 offres, l'agentique IA en tête. Aucun prix, nulle part. */
 export const OFFERS = [
   {
-    id: 'site-mesure',
+    id: 'agent-ia',
     num: '01',
+    title: 'Agent IA & automatisation',
+    promise: 'Des agents LLM et des automatisations qui transforment la donnée en décision.',
+    forWho: 'Équipes qui passent trop de temps sur du reporting ou des tâches répétitives autour de leurs données.',
+    deliverables: [
+      'Cadrage du cas d’usage et des données',
+      'Prototype testable',
+      'Garde-fous et repli sans LLM',
+      'Mise en production et passation',
+    ],
+    delay: 'Prototype testable en 1 semaine, mise en production 2 à 3 semaines',
+  },
+  {
+    id: 'site-mesure',
+    num: '02',
     title: 'Site mesuré sur mesure',
     promise: 'Un site livré avec son plan de taggage, sa conformité cookies et son dashboard de suivi.',
     forWho: 'Marques et indépendants qui lancent ou refondent leur site et veulent pouvoir prouver ses résultats.',
@@ -39,7 +53,7 @@ export const OFFERS = [
   },
   {
     id: 'audit-tracking',
-    num: '02',
+    num: '03',
     title: 'Audit & refonte tracking / RGPD',
     promise: 'Le diagnostic d’un site existant, sa mise en conformité et un plan de mesure fiable.',
     forWho: 'Sites existants dont les données ne sont plus fiables ou dont le bandeau cookies pose question.',
@@ -51,21 +65,10 @@ export const OFFERS = [
     ],
     delay: 'Audit sous 5 jours, mise en conformité 1 à 2 semaines selon le périmètre',
   },
-  {
-    id: 'agent-ia',
-    num: '03',
-    title: 'Agent IA & automatisation',
-    promise: 'Des agents LLM et des automatisations qui transforment la donnée en décision.',
-    forWho: 'Équipes qui passent trop de temps sur du reporting ou des tâches répétitives autour de leurs données.',
-    deliverables: [
-      'Cadrage du cas d’usage et des données',
-      'Prototype testable',
-      'Garde-fous et repli sans LLM',
-      'Mise en production et passation',
-    ],
-    delay: 'Prototype testable en 1 semaine, mise en production 2 à 3 semaines',
-  },
 ] as const
+
+/** Accès à une offre par son id, indépendant de l'ordre d'affichage. */
+export const offer = (id: (typeof OFFERS)[number]['id']) => OFFERS.find((o) => o.id === id)!
 
 export const DELAY_NOTE = 'Délai indicatif, confirmé après le cadrage.'
 export const PRICE_NOTE = 'Sur devis, après un premier échange de 30 min.'

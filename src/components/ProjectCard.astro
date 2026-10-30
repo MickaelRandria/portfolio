@@ -8,8 +8,8 @@ interface Props {
   /** Fond de la section qui accueille la carte. */
   tone?: 'light' | 'dark'
   /**
-   * `wide` : visuel et texte côte à côte, pleine largeur (Réalisations, /lab).
-   * `stacked` : visuel au-dessus, pour deux cartes côte à côte (teaser Lab).
+   * `wide` : visuel et texte côte à côte, pleine largeur (Réalisations, /agentique-ia).
+   * `stacked` : visuel au-dessus, pour deux cartes côte à côte (home).
    * Même gabarit dans les deux cas : mêmes champs, même ordre.
    */
   layout?: 'wide' | 'stacked'
@@ -22,7 +22,7 @@ interface Props {
 const { project, tone = 'light', layout = 'wide', index, headingLevel = 3 } = Astro.props
 const Heading = headingLevel === 2 ? 'h2' : 'h3'
 const p = project.data
-const base = p.section === 'lab' ? '/lab' : '/realisations'
+const base = p.section === 'agentique' ? '/agentique-ia' : '/realisations'
 const caseUrl = `${base}/${project.id}`
 const wide = layout === 'wide'
 const muted = tone === 'light' ? 'text-ink/70' : 'text-sand/70'
@@ -30,7 +30,7 @@ const rule = tone === 'light' ? 'border-ink/15' : 'border-sand/15'
 const accent = tone === 'light' ? 'text-water' : 'text-gold'
 ---
 
-<!-- Gabarit de carte unique, Réalisations et Lab : visuel grand, typologie,
+<!-- Gabarit de carte unique, Réalisations et Agentique IA : visuel grand, typologie,
      client, une ligne de valeur, le chiffre, deux CTA. -->
 <article
   data-reveal
@@ -82,7 +82,7 @@ const accent = tone === 'light' ? 'text-water' : 'text-gold'
             rel="noopener noreferrer"
             class={`inline-flex min-h-11 items-center rounded-sm border px-6 text-sm ${tone === 'light' ? 'border-ink/40' : 'border-sand/40'}`}
           >
-            {p.section === 'lab' ? 'Tester la démo' : 'Voir le site live'}
+            {p.section === 'agentique' ? 'Tester la démo' : 'Voir le site live'}
           </a>
         )
       }

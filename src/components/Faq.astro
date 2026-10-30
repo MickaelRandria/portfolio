@@ -1,5 +1,5 @@
 ---
-import { OFFERS, PRICE_NOTE, RANGE_NOTE } from '../lib/site'
+import { PRICE_NOTE, RANGE_NOTE, offer } from '../lib/site'
 
 interface Props {
   tone?: 'light' | 'dark'
@@ -17,7 +17,7 @@ const QUESTIONS = [
   },
   {
     q: 'Combien de temps ça prend ?',
-    a: `Site mesuré : ${OFFERS[0].delay.split(',')[0]}. Audit : ${OFFERS[1].delay.split(',')[0].replace('Audit ', '')}. Prototype d'agent : ${OFFERS[2].delay.split(',')[0].replace('Prototype testable ', '')}. Des agents IA produisent en pipeline pendant que je garde la conception et la revue : près de 2 fois plus rapide qu'un développement classique. Délai indicatif, confirmé après le cadrage.`,
+    a: `Prototype d'agent IA : ${offer('agent-ia').delay.split(',')[0].replace('Prototype testable ', '')}. Site mesuré : ${offer('site-mesure').delay.split(',')[0]}. Audit : ${offer('audit-tracking').delay.split(',')[0].replace('Audit ', '')}. Des agents IA produisent en pipeline pendant que je garde la conception et la revue : près de 2 fois plus rapide qu'un développement classique. Délai indicatif, confirmé après le cadrage.`,
   },
   {
     q: 'Qui écrit le contenu du site ?',
