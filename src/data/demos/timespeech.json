@@ -1,0 +1,31 @@
+{
+ "source": "Données de démonstration du prototype (src/mocks/courseData.ts)",
+ "targetMinutes": 120,
+ "sections": [
+  {
+   "title": "Introduction à l'IA générative",
+   "before": 10,
+   "after": 10
+  },
+  {
+   "title": "IA et analyse marketing",
+   "before": 30,
+   "after": 30
+  },
+  {
+   "title": "IA et création de contenu",
+   "before": 35,
+   "after": 35
+  },
+  {
+   "title": "Cas pratique",
+   "before": 37,
+   "after": 30
+  },
+  {
+   "title": "Synthèse et questions",
+   "before": 20,
+   "after": 13
+  }
+ ]
+}

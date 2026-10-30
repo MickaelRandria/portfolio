@@ -1,0 +1,70 @@
+---
+import BarometreLive from './demos/BarometreLive'
+import BeastlyCasting from './demos/BeastlyCasting'
+import TimeSpeechPlan from './demos/TimeSpeechPlan'
+import SiteAudit from './demos/SiteAudit'
+import PrestigeTunnel from './demos/PrestigeTunnel'
+import CatalogueExplorer from './demos/CatalogueExplorer'
+import EventsMap from './demos/EventsMap'
+import auditPrestige from '../data/demos/audit-prestigerent.json'
+import auditMaille from '../data/demos/audit-petite-maille.json'
+
+/**
+ * Démos interactives et dataviz propres à chaque projet. Chaque îlot n'est
+ * hydraté qu'à son entrée à l'écran. Toutes les données viennent des repos,
+ * d'une mesure du site en ligne ou d'une API publique interrogée en direct.
+ */
+interface Props {
+  id: string
+}
+
+const { id } = Astro.props
+
+const INTRO: Record<string, string> = {
+  'barometre-data': "Les sources de l'agent, interrogées en direct depuis votre navigateur, avec ses propres règles de calcul.",
+  beastly: "L'agent de casting rejoué sur la base de créateurs du prototype.",
+  timespeech: "L'optimisation de durée, sur le plan minuté du prototype.",
+  prestigerent: 'Le tunnel tel qu’il est en ligne, et ce que le site charge réellement.',
+  'petite-maille': 'Le catalogue réel, et ce que le site charge réellement.',
+  'behind-the-song': 'La carte de la feature, sur le jeu de démonstration du prototype.',
+}
+---
+
+{
+  INTRO[id] && (
+    <section aria-labelledby="demo" class="grid-tech border-y border-gold/15 bg-ink text-sand">
+      <div class="mx-auto max-w-[1280px] px-5 py-20 sm:px-8 lg:py-24">
+        <div data-reveal class="grid gap-6 lg:grid-cols-12">
+          <p class="annot text-gold lg:col-span-3">Démo &amp; données</p>
+          <div class="lg:col-span-9">
+            <h2 id="demo" class="font-fraunces text-4xl font-bold leading-[1.05] lg:text-5xl">À tester.</h2>
+            <p class="mt-4 max-w-2xl text-lg leading-[1.6] text-sand/75">{INTRO[id]}</p>
+          </div>
+        </div>
+
+        <div class="mt-12 grid gap-6">
+          {id === 'barometre-data' && <BarometreLive client:visible />}
+          {id === 'beastly' && <BeastlyCasting client:visible />}
+          {id === 'timespeech' && <TimeSpeechPlan client:visible />}
+          {
+            id === 'prestigerent' && (
+              <>
+                <PrestigeTunnel client:visible />
+                <SiteAudit client:visible audit={auditPrestige} />
+              </>
+            )
+          }
+          {
+            id === 'petite-maille' && (
+              <>
+                <CatalogueExplorer client:visible />
+                <SiteAudit client:visible audit={auditMaille} note="Page d’accueil chargée dans un navigateur réel : les visuels du catalogue font l’essentiel du poids." />
+              </>
+            )
+          }
+          {id === 'behind-the-song' && <EventsMap client:visible />}
+        </div>
+      </div>
+    </section>
+  )
+}

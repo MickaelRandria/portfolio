@@ -1,0 +1,22 @@
+{
+ "source": "Mesure Playwright du site en ligne, chargement de la page d'accueil",
+ "url": "https://www.prestigerent.pro/",
+ "measuredAt": "2026-10-30",
+ "totalBytes": 256576,
+ "requests": 10,
+ "byType": {
+  "HTML": 21422,
+  "JavaScript": 6914,
+  "Images": 98316,
+  "CSS": 3629,
+  "Polices": 126295
+ },
+ "thirdParty": [
+  "cdn.jsdelivr.net",
+  "images.unsplash.com",
+  "fonts.googleapis.com",
+  "unpkg.com",
+  "fonts.gstatic.com"
+ ],
+ "cookies": 0
+}

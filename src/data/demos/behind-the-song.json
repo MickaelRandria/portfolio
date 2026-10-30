@@ -1,0 +1,152 @@
+{
+ "source": "Jeu de démonstration du prototype (src/data/mapData.js)",
+ "typeLabels": {
+  "concert": "Concert",
+  "showcase": "Showcase",
+  "festival": "Festival"
+ },
+ "genreLabels": {
+  "rap": "Rap",
+  "rnb": "R&B",
+  "electronic": "Électro",
+  "pop": "Pop",
+  "jazz": "Jazz",
+  "indie": "Indie",
+  "variete": "Variété",
+  "rock": "Rock"
+ },
+ "events": [
+  {
+   "name": "aupinard en showcase",
+   "type": "showcase",
+   "genre": "rnb",
+   "lat": 44.8295,
+   "lng": -0.5773,
+   "date": "2026-04-18",
+   "price": 12,
+   "venue": "Rock School Barbey",
+   "city": "Bordeaux"
+  },
+  {
+   "name": "Soirée R&B Bordeaux",
+   "type": "concert",
+   "genre": "rnb",
+   "lat": 44.8378,
+   "lng": -0.6461,
+   "date": "2026-04-19",
+   "price": 15,
+   "venue": "Le Krakatoa",
+   "city": "Mérignac"
+  },
+  {
+   "name": "Nuit Électro — Darwin",
+   "type": "festival",
+   "genre": "electronic",
+   "lat": 44.8479,
+   "lng": -0.5558,
+   "date": "2026-04-20",
+   "price": 20,
+   "venue": "Darwin Ecosystème",
+   "city": "Bordeaux"
+  },
+  {
+   "name": "Nuit Rap FR",
+   "type": "concert",
+   "genre": "rap",
+   "lat": 48.8611,
+   "lng": 2.3808,
+   "date": "2026-04-15",
+   "price": 22,
+   "venue": "Café de la Danse",
+   "city": "Paris 11e"
+  },
+  {
+   "name": "Festival Neon — Electronic Night",
+   "type": "festival",
+   "genre": "electronic",
+   "lat": 45.777,
+   "lng": 4.8625,
+   "date": "2026-04-19",
+   "price": 30,
+   "venue": "Transbordeur",
+   "city": "Lyon 9e"
+  },
+  {
+   "name": "Nayra — Release Party",
+   "type": "showcase",
+   "genre": "pop",
+   "lat": 44.8295,
+   "lng": -0.5773,
+   "date": "2026-04-25",
+   "price": 8,
+   "venue": "Rock School Barbey",
+   "city": "Bordeaux"
+  },
+  {
+   "name": "Soul & R'n'B Night",
+   "type": "concert",
+   "genre": "rnb",
+   "lat": 43.2919,
+   "lng": 5.3797,
+   "date": "2026-04-22",
+   "price": 18,
+   "venue": "Espace Julien",
+   "city": "Marseille 6e"
+  },
+  {
+   "name": "Scène Ouverte — Jazz & Soul",
+   "type": "showcase",
+   "genre": "jazz",
+   "lat": 47.2063,
+   "lng": -1.5643,
+   "date": "2026-04-15",
+   "price": 0,
+   "venue": "Le Ferrailleur",
+   "city": "Nantes"
+  },
+  {
+   "name": "SCH — Tournée JVLIVS III",
+   "type": "concert",
+   "genre": "rap",
+   "lat": 50.6326,
+   "lng": 3.0745,
+   "date": "2026-04-18",
+   "price": 35,
+   "venue": "L'Aéronef",
+   "city": "Lille"
+  },
+  {
+   "name": "Plume — Dernier show avant pause",
+   "type": "concert",
+   "genre": "indie",
+   "lat": 48.8823,
+   "lng": 2.3343,
+   "date": "2026-04-19",
+   "price": 0,
+   "venue": "La Cigale",
+   "city": "Paris 18e"
+  },
+  {
+   "name": "Kaaris & Friends",
+   "type": "concert",
+   "genre": "rap",
+   "lat": 45.7589,
+   "lng": 4.832,
+   "date": "2026-04-15",
+   "price": 28,
+   "venue": "L'Ampère",
+   "city": "Lyon 6e"
+  },
+  {
+   "name": "Julien Granel — Tournée Solo",
+   "type": "concert",
+   "genre": "pop",
+   "lat": 44.8637,
+   "lng": -0.5241,
+   "date": "2026-04-26",
+   "price": 18,
+   "venue": "Le Rocher de Palmer",
+   "city": "Cenon"
+  }
+ ]
+}

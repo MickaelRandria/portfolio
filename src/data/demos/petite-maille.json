@@ -1,0 +1,95 @@
+{
+ "source": "Catalogue du site Petite Maille (index.html)",
+ "items": [
+  {
+   "name": "Pochette Granny Rose & Vert",
+   "category": "accessoires",
+   "price": 15,
+   "vinted": true
+  },
+  {
+   "name": "Étui Vert Pomme",
+   "category": "accessoires",
+   "price": 10,
+   "vinted": true
+  },
+  {
+   "name": "Sac Filet Bleu",
+   "category": "accessoires",
+   "price": 18,
+   "vinted": true
+  },
+  {
+   "name": "Pochette Soleil",
+   "category": "accessoires",
+   "price": 12,
+   "vinted": true
+  },
+  {
+   "name": "Marque-page Fleur Rose",
+   "category": "accessoires",
+   "price": 6,
+   "vinted": true
+  },
+  {
+   "name": "Cabas Arc-en-ciel",
+   "category": "accessoires",
+   "price": 35,
+   "vinted": true
+  },
+  {
+   "name": "Étui Téléphone Vert",
+   "category": "accessoires",
+   "price": 12,
+   "vinted": true
+  },
+  {
+   "name": "Chouchou Vert d'Eau",
+   "category": "accessoires",
+   "price": 5,
+   "vinted": true
+  },
+  {
+   "name": "Attache-câble Fleur",
+   "category": "accessoires",
+   "price": 5,
+   "vinted": true
+  },
+  {
+   "name": "Bandeau Fleurs Jaune",
+   "category": "accessoires",
+   "price": 10,
+   "vinted": true
+  },
+  {
+   "name": "Pochette Tulipes",
+   "category": "accessoires",
+   "price": 12,
+   "vinted": false
+  },
+  {
+   "name": "Marque-page Livre",
+   "category": "accessoires",
+   "price": 6,
+   "vinted": false
+  },
+  {
+   "name": "Marque-page Cœur",
+   "category": "accessoires",
+   "price": 6,
+   "vinted": true
+  },
+  {
+   "name": "Bonnet d'été Bohème",
+   "category": "accessoires",
+   "price": 20,
+   "vinted": true
+  },
+  {
+   "name": "Duo Sous-verres Fleurs",
+   "category": "deco",
+   "price": 14,
+   "vinted": true
+  }
+ ]
+}

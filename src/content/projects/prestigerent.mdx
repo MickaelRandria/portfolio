@@ -6,7 +6,7 @@ typology: Conformité RGPD & SEO local
 client: Confidentiel
 year: '2026'
 value: Une vitrine bilingue livrée conforme, référencée localement et pensée pour qualifier les propriétaires.
-metric: 2 langues, 1 tunnel de qualification en 4 étapes, SEO local complet.
+metric: 2 langues, 1 tunnel de qualification en 4 questions, SEO local complet.
 context: >-
   Une activité bordelaise de location courte durée appliquée à des locaux commerciaux, au moment de son
   lancement : pas encore de biens, d'avis ni de chiffres. Il fallait être trouvable localement, conforme dès
@@ -22,21 +22,29 @@ githubUrl: https://github.com/MickaelRandria/PrestigeRent
 lens: data-web
 specs:
   - { label: Traceurs tiers, value: 'Aucun : ni outil d’analytics tiers, ni pixel publicitaire' }
-  - { label: Cookies, value: 'Uniquement le cookie de session technique de l’hébergeur, strictement nécessaire' }
-  - { label: Consentement, value: 'Rien à soumettre au consentement, aucun bandeau à afficher' }
-  - { label: Données structurées, value: 'Schema.org LocalBusiness + Person' }
+  - { label: Cookies, value: 'Aucun cookie déposé lors d’une visite (mesuré le 30/10/2026)' }
+  - { label: Consentement, value: 'Aucun traceur soumis au consentement, aucun bandeau à afficher' }
+  - { label: Ressources tierces, value: '5 domaines contactés : polices Google (2), CDN jsDelivr et unpkg, images Unsplash' }
+  - { label: Poids de la page, value: '257 Ko en 10 requêtes, dont 49 % de polices (mesuré le 30/10/2026)' }
+  - { label: Données structurées, value: 'Schema.org LocalBusiness' }
   - { label: Indexation, value: 'sitemap.xml, robots.txt, balise canonical, Open Graph complet' }
   - { label: Bilingue, value: '102 clés de traduction data-i18n, FR / EN sans rechargement' }
-  - { label: Qualification, value: 'Formulaire en 4 étapes réservé aux propriétaires' }
+  - { label: Qualification, value: '4 questions avant les coordonnées : bureaux, sanitaires, superficie, délai' }
 deepDive:
   - title: La conformité par conception
     body: >-
-      Plutôt que d'installer des outils puis de gérer un bandeau, le site n'embarque aucun traceur tiers.
-      La politique de confidentialité le dit explicitement, et le premier écran reste propre : pas de
-      friction de consentement au moment où un propriétaire découvre l'offre.
+      Plutôt que d'installer des outils puis de gérer un bandeau, le site n'embarque aucun traceur et ne
+      dépose aucun cookie. La politique de confidentialité le dit explicitement, et le premier écran reste
+      propre : pas de friction de consentement au moment où un propriétaire découvre l'offre.
+  - title: Ce qu'il reste à durcir
+    body: >-
+      La page contacte encore 5 domaines tiers pour ses polices, deux bibliothèques et deux images. Le
+      chargement des polices depuis Google transmet l'adresse IP du visiteur : les auto-héberger, comme les
+      scripts et les images, ramènerait la page à zéro domaine tiers et allégerait au passage la moitié de
+      son poids.
   - title: Le tunnel comme premier indicateur
     body: >-
-      Le formulaire filtre par type de bien, surface et échéance. Chaque demande reçue est déjà un lead
+      Le formulaire qualifie le local en 4 questions : nombre de bureaux, sanitaires, superficie et délai de démarrage. Chaque demande reçue est déjà un lead
       qualifié : le volume de demandes éligibles devient l'indicateur de performance du site, mesurable
       sans aucun outil tiers.
   - title: 'Piste de mesure'
@@ -59,8 +67,9 @@ juridiques et opérationnelles que se posent les propriétaires.
 
 ### Un tunnel qui qualifie
 
-Formulaire multi-étapes réservé aux propriétaires : type de bien, surface, échéance. Les demandes arrivent
-déjà triées, sans échange préalable pour savoir si le bien est éligible.
+Formulaire multi-étapes réservé aux propriétaires : nombre de bureaux, sanitaires, superficie et délai,
+puis les coordonnées. Les demandes arrivent déjà triées, sans échange préalable pour savoir si le bien
+est éligible.
 
 ### Bilingue et léger
 

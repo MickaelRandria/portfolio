@@ -1,0 +1,19 @@
+{
+ "source": "Mesure Playwright du site en ligne, chargement de la page d'accueil",
+ "url": "https://petite-maille.vercel.app/",
+ "measuredAt": "2026-10-30",
+ "totalBytes": 947545,
+ "requests": 12,
+ "byType": {
+  "HTML": 16674,
+  "CSS": 1614,
+  "Polices": 95945,
+  "Images": 833312
+ },
+ "thirdParty": [
+  "fonts.googleapis.com",
+  "fonts.gstatic.com",
+  "images.unsplash.com"
+ ],
+ "cookies": 0
+}

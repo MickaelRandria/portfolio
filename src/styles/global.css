@@ -118,6 +118,30 @@
   background-repeat: no-repeat;
 }
 
+/* ------------------------------------------------------------------
+   Dataviz : tokens des démos projets (surface encre relevée).
+   Palette catégorielle validée sur #13233a (validate_palette.js, toutes
+   paires, CVD inclus) : 3 séries maximum. L'or est un accent, jamais une
+   série : il échoue le plancher de chroma face aux autres teintes.
+   ------------------------------------------------------------------ */
+.viz {
+  --viz-surface: #13233a;
+  --viz-grid: rgb(244 235 217 / 0.12);
+  --viz-text: #f4ebd9;
+  --viz-text-2: rgb(244 235 217 / 0.74);
+  --viz-muted: rgb(244 235 217 / 0.55);
+  --viz-1: #3987e5;
+  --viz-2: #d95926;
+  --viz-3: #199e70;
+  --viz-accent: #d9c5a0;
+  color: var(--viz-text);
+  min-width: 0;
+}
+/* Avant hydratation, un SVG ne dépasse jamais son conteneur. */
+.viz svg {
+  max-width: 100%;
+}
+
 /* Reveal au scroll : déclenché à 20 % de viewport (voir Reveal.astro), jamais
    d'écran vide. Sans JS ou en mouvement réduit, le contenu reste visible. */
 @media (prefers-reduced-motion: no-preference) {
