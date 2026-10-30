@@ -81,6 +81,11 @@ export default function ContactForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  // Pré-cochée en arrivant d'un lien « recevoir les fourchettes » (/contact?fourchettes=1).
+  // La case n'apparaît qu'à l'étape 3 : pas d'écart entre rendu serveur et hydratation.
+  const [wantsRanges, setWantsRanges] = useState(
+    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('fourchettes'),
+  )
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -127,6 +132,7 @@ export default function ContactForm() {
           phone: phone || 'Non renseigné',
           project_type: label,
           context,
+          fourchettes: wantsRanges ? 'Oui, envoyer les fourchettes indicatives' : 'Non',
           _subject: `Nouveau lead portfolio : ${label} - ${name}`,
         }),
       })
@@ -156,6 +162,7 @@ export default function ContactForm() {
     setName('')
     setEmail('')
     setPhone('')
+    setWantsRanges(false)
     setErrorMessage('')
   }
 
@@ -349,6 +356,19 @@ export default function ContactForm() {
                       className={`${FIELD_CLASS} mt-2`}
                     />
                   </div>
+                  <label htmlFor="contact-ranges" className="flex min-h-11 cursor-pointer items-start gap-3">
+                    <input
+                      id="contact-ranges"
+                      name="fourchettes"
+                      type="checkbox"
+                      checked={wantsRanges}
+                      onChange={(e) => setWantsRanges(e.target.checked)}
+                      className="mt-0.5 h-5 w-5 shrink-0 accent-ink"
+                    />
+                    <span className="text-sm leading-[1.5] text-ink/80">
+                      Recevoir les fourchettes de prix indicatives avant notre échange
+                    </span>
+                  </label>
                 </div>
 
                 <div className="mt-8 rounded-sm border border-ink/15 bg-ink/5 p-4">
@@ -357,6 +377,9 @@ export default function ContactForm() {
                   <p className="mt-1 text-[13px] italic text-ink/70">
                     {context.length > 100 ? `${context.slice(0, 100)}...` : context}
                   </p>
+                  {wantsRanges && (
+                    <p className="mt-2 font-mono text-xs text-ink/70">+ fourchettes de prix indicatives</p>
+                  )}
                 </div>
 
                 <div className="mt-8 flex items-center justify-between">

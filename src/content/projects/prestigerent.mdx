@@ -19,6 +19,31 @@ stack: [HTML, CSS, JavaScript, Schema.org, FTP]
 video: /PrestigeRent.mp4
 liveUrl: https://www.prestigerent.pro/
 githubUrl: https://github.com/MickaelRandria/PrestigeRent
+lens: data-web
+specs:
+  - { label: Traceurs tiers, value: 'Aucun : ni outil d’analytics tiers, ni pixel publicitaire' }
+  - { label: Cookies, value: 'Uniquement le cookie de session technique de l’hébergeur, strictement nécessaire' }
+  - { label: Consentement, value: 'Rien à soumettre au consentement, aucun bandeau à afficher' }
+  - { label: Données structurées, value: 'Schema.org LocalBusiness + Person' }
+  - { label: Indexation, value: 'sitemap.xml, robots.txt, balise canonical, Open Graph complet' }
+  - { label: Bilingue, value: '102 clés de traduction data-i18n, FR / EN sans rechargement' }
+  - { label: Qualification, value: 'Formulaire en 4 étapes réservé aux propriétaires' }
+deepDive:
+  - title: La conformité par conception
+    body: >-
+      Plutôt que d'installer des outils puis de gérer un bandeau, le site n'embarque aucun traceur tiers.
+      La politique de confidentialité le dit explicitement, et le premier écran reste propre : pas de
+      friction de consentement au moment où un propriétaire découvre l'offre.
+  - title: Le tunnel comme premier indicateur
+    body: >-
+      Le formulaire filtre par type de bien, surface et échéance. Chaque demande reçue est déjà un lead
+      qualifié : le volume de demandes éligibles devient l'indicateur de performance du site, mesurable
+      sans aucun outil tiers.
+  - title: 'Piste de mesure'
+    body: >-
+      Pour suivre l'entonnoir sans réintroduire de bandeau, une mesure d'audience configurée pour être
+      exemptée de consentement permettrait de compter les entrées et les abandons de chaque étape du
+      tunnel.
 ---
 
 ### SEO local livré de zéro
@@ -28,7 +53,8 @@ et `robots.txt`. Le site part indexable et identifié comme une activité bordel
 
 ### Conformité RGPD
 
-Mentions légales et politique de confidentialité rédigées et intégrées, FAQ structurée sur les questions
+Aucun traceur tiers ni cookie publicitaire : seul le cookie de session technique de l'hébergeur est
+déposé. Mentions légales et politique de confidentialité intégrées, FAQ structurée sur les questions
 juridiques et opérationnelles que se posent les propriétaires.
 
 ### Un tunnel qui qualifie

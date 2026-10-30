@@ -19,6 +19,26 @@ status: Prototype · agent simulé
 video: /beastly.mp4
 liveUrl: https://beastly-creator-portal.vercel.app
 githubUrl: https://github.com/MickaelRandria/beastly-creator-portal-
+lens: agentique
+specs:
+  - { label: Statut de l'agent, value: 'Simulé côté front, étapes temporisées, scores non calculés' }
+  - { label: Machine à états, value: 'idle → scan des profils → scoring → sélection terminée' }
+  - { label: Briques prévues, value: 'Scraping de profils (Apify) puis scoring par Gemini, SDK @google/genai déjà intégré' }
+  - { label: Repli, value: "Idées de contenus pré-rédigées servies si la génération n'est pas disponible" }
+  - { label: Visualisation, value: 'force-graph : nuage ou clusters par niche' }
+  - { label: Accès créateur, value: 'Routes tokenisées /event/:token (RSVP, brief, idées, assets, upload, QR code)' }
+deepDive:
+  - title: Concevoir le contrat de l'agent avant de le brancher
+    body: >-
+      La machine à états fixe ce que l'interface attend à chaque étape : un scan, un scoring, une
+      sélection argumentée. Remplacer la temporisation par de vrais appels ne change pas l'expérience,
+      seulement la source des scores. C'est ce qui permet de valider l'usage avec l'équipe avant de payer
+      des appels de scraping et de modèle.
+  - title: Un repli dès le prototype
+    body: >-
+      La génération d'idées de contenus a déjà son chemin de secours : des idées rédigées servies quand
+      le modèle n'est pas disponible. L'agent ne laisse jamais un créateur devant un écran vide le jour
+      de l'événement.
 ---
 
 ### Un agent de casting en trois temps

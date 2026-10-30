@@ -1,5 +1,6 @@
 ---
-import { DELAY_NOTE, OFFERS, PRICE_NOTE } from '../../lib/site'
+import SpeedBand from '../SpeedBand.astro'
+import { DELAY_NOTE, OFFERS, PRICE_NOTE, RANGE_NOTE, RANGE_URL } from '../../lib/site'
 ---
 
 <section id="offres" class="bg-ink text-sand">
@@ -67,6 +68,15 @@ import { DELAY_NOTE, OFFERS, PRICE_NOTE } from '../../lib/site'
       }
     </ol>
 
-    <p data-reveal class="annot mt-10 text-sand/60">{PRICE_NOTE}</p>
+    <p data-reveal class="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-sand/70">
+      <span class="annot">{PRICE_NOTE}</span>
+      <a href={RANGE_URL} class="inline-flex min-h-11 items-center text-sand underline decoration-gold/60 underline-offset-4 hover:decoration-gold">
+        {RANGE_NOTE.replace(' envoyées sur simple demande.', '')} : les recevoir →
+      </a>
+    </p>
+
+    <div class="mt-12">
+      <SpeedBand />
+    </div>
   </div>
 </section>

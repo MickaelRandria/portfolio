@@ -1,5 +1,5 @@
 ---
-import { PRICE_NOTE } from '../lib/site'
+import { OFFERS, PRICE_NOTE, RANGE_NOTE } from '../lib/site'
 
 interface Props {
   tone?: 'light' | 'dark'
@@ -13,11 +13,11 @@ const { tone = 'dark' } = Astro.props
 const QUESTIONS = [
   {
     q: 'Quel budget prévoir ?',
-    a: `${PRICE_NOTE} Le premier échange sert à cadrer le périmètre : vous recevez ensuite un devis détaillé par livrable, sans engagement.`,
+    a: `${PRICE_NOTE} ${RANGE_NOTE} Cochez la case dans le formulaire de contact pour les recevoir avant même d'échanger ; le devis détaillé par livrable suit le cadrage, sans engagement.`,
   },
   {
     q: 'Combien de temps ça prend ?',
-    a: 'Compter 4 à 6 semaines pour un site mesuré, un audit sous 10 jours, un prototype d’agent en 2 à 3 semaines. Délai indicatif, confirmé après le cadrage.',
+    a: `Site mesuré : ${OFFERS[0].delay.split(',')[0]}. Audit : ${OFFERS[1].delay.split(',')[0].replace('Audit ', '')}. Prototype d'agent : ${OFFERS[2].delay.split(',')[0].replace('Prototype testable ', '')}. Des agents IA produisent en pipeline pendant que je garde la conception et la revue : près de 2 fois plus rapide qu'un développement classique. Délai indicatif, confirmé après le cadrage.`,
   },
   {
     q: 'Qui écrit le contenu du site ?',

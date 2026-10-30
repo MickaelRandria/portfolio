@@ -28,6 +28,33 @@ pipeline:
   - { label: Learning, detail: Enseignements calculés sur résultats réels }
 liveUrl: https://barometre-data.vercel.app
 githubUrl: https://github.com/MickaelRandria/Barometre_Data
+lens: agentique
+specs:
+  - { label: Modèle, value: 'Ministral 8B (ministral-8b-latest), API Mistral' }
+  - { label: Orchestration, value: '1 endpoint /api/agent, 10 modules Node.js isolés' }
+  - { label: Appels LLM, value: '5 modules : parsing du brief, qualification, revue de score, variantes, suggestion Wikipédia' }
+  - { label: Format de sortie, value: 'JSON (response_format json_object), extraction de secours si le modèle encadre en Markdown' }
+  - { label: Robustesse, value: 'Client sans exception ({ ok: false, reason }), timeout 12 s, repli déterministe' }
+  - { label: Données live, value: 'Open-Meteo sans cache applicatif ; Wikimedia Pageviews 7 j vs 90 j, arrêtées à J-2, cache 6 h' }
+  - { label: Seuil de confiance, value: 'Statut live seulement si 3 axes au moins ont des données, sinon estimation saisonnière affichée' }
+  - { label: Tests, value: '5 suites : parser, qualification, couche Mistral, revue de score, plan A/B' }
+deepDive:
+  - title: Le LLM en second avis, jamais en pilote
+    body: >-
+      Le score est d'abord calculé de façon déterministe. Ministral le relit et propose des variantes, mais
+      chaque appel peut échouer sans bloquer la réponse : l'appelant reçoit un résultat typé et se replie
+      sur son calcul. Un modèle 8B suffit dans ce rôle, avec un coût et une latence compatibles avec un
+      formulaire.
+  - title: Ne jamais faire passer une estimation pour une donnée
+    body: >-
+      Chaque source porte son statut. Si la météo tombe, le repli saisonnier est marqué comme simulé ; si
+      moins de trois axes d'attention ont des données, l'interface bascule explicitement en estimation. Un
+      agent qui décide doit dire sur quoi il décide.
+  - title: Des garde-fous qui distinguent contrôle et validation
+    body: >-
+      Les règles RGPD portent un champ de vérification : automatique quand l'agent observe réellement
+      quelque chose (heure d'envoi, nature des données, pression déclarée), manuelle sinon. Le statut
+      affiché est alors « à valider », jamais « conforme ».
 ---
 
 ### Un pipeline de dix modules

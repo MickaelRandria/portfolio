@@ -35,7 +35,7 @@ export const OFFERS = [
       'Bandeau cookies et conformité RGPD',
       'Dashboard de suivi de la performance',
     ],
-    delay: '4 à 6 semaines, de l’atelier de cadrage à la mise en ligne',
+    delay: '2 à 3 semaines, de l’atelier de cadrage à la mise en ligne',
   },
   {
     id: 'audit-tracking',
@@ -49,7 +49,7 @@ export const OFFERS = [
       'Plan de mesure priorisé',
       'Recette des tags et documentation',
     ],
-    delay: 'Audit sous 10 jours, mise en conformité 2 à 3 semaines selon le périmètre',
+    delay: 'Audit sous 5 jours, mise en conformité 1 à 2 semaines selon le périmètre',
   },
   {
     id: 'agent-ia',
@@ -63,9 +63,33 @@ export const OFFERS = [
       'Garde-fous et repli sans LLM',
       'Mise en production et passation',
     ],
-    delay: 'Prototype testable en 2 à 3 semaines, mise en production 4 à 6 semaines',
+    delay: 'Prototype testable en 1 semaine, mise en production 2 à 3 semaines',
   },
 ] as const
 
 export const DELAY_NOTE = 'Délai indicatif, confirmé après le cadrage.'
 export const PRICE_NOTE = 'Sur devis, après un premier échange de 30 min.'
+/** Aucun montant affiché sur le site : les fourchettes s'envoient sur demande. */
+export const RANGE_NOTE = 'Fourchettes indicatives envoyées sur simple demande.'
+export const RANGE_URL = '/contact?fourchettes=1'
+
+/**
+ * Argument de vitesse. Formulé face à « un développement classique » plutôt
+ * qu'à des concurrents nommés : une publicité comparative doit rester
+ * objective et vérifiable.
+ */
+export const SPEED_CLAIM = 'Près de 2 fois plus rapide qu’un développement classique'
+export const SPEED_POINTS = [
+  {
+    title: 'Des agents pour produire',
+    text: 'Design system, écrans, intégration : des agents IA spécialisés produisent en pipeline ce qui prendrait des jours à la main.',
+  },
+  {
+    title: 'Un humain pour décider',
+    text: 'Le cadrage, la conception et chaque arbitrage restent les miens. Les agents exécutent, ils ne choisissent pas.',
+  },
+  {
+    title: 'Une QA jamais sautée',
+    text: 'Un agent de revue passe après chaque étape, puis une recette manuelle : le temps gagné n’est jamais pris sur la qualité.',
+  },
+] as const

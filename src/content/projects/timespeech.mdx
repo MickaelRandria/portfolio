@@ -17,6 +17,24 @@ stack: [React, TypeScript, Tailwind, Framer Motion]
 status: Prototype UX · données simulées
 video: /timespeech.mp4
 githubUrl: https://github.com/MickaelRandria/TimeSpeech
+lens: agentique
+specs:
+  - { label: Méthode, value: 'Pipeline séquentiel de 4 sous-agents Claude Code' }
+  - { label: Agents, value: 'design-system-builder → screen-builder → flow-integrator → qa-reviewer' }
+  - { label: Règle, value: "Chaque agent attend la fin du précédent ; la QA n'est jamais sautée" }
+  - { label: Livrable, value: '10 écrans, parcours complet de la landing au planning' }
+  - { label: Données, value: 'Simulées (mocks), aucun appel de modèle en production' }
+deepDive:
+  - title: Un pipeline, pas du parallèle
+    body: >-
+      Le découpage suit les dépendances réelles : le design system doit exister avant les écrans, les
+      écrans avant le câblage du parcours, et la QA ne vérifie que ce qui est fini. Au-delà de trois ou
+      quatre agents, la coordination coûte plus qu'elle ne rapporte.
+  - title: La QA comme garde-fou de livraison
+    body: >-
+      L'agent de revue passe après chaque intégration et attrape les incohérences avant qu'elles
+      n'apparaissent en démo. C'est cette étape qui permet d'aller vite sans dégrader le rendu : le temps
+      gagné par les agents de production n'est pas pris sur la vérification.
 ---
 
 ### Un affinage conversationnel

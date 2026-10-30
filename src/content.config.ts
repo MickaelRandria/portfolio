@@ -36,6 +36,15 @@ const projects = defineCollection({
     video: z.string().optional(),
     /** Étapes d'un agent, affichées en frise (projets agentiques). */
     pipeline: z.array(z.object({ label: z.string(), detail: z.string() })).optional(),
+    /**
+     * Vue experte propre au projet : le public visé décide du vocabulaire et
+     * de la mise en forme de la section « Pour les experts » du case study.
+     */
+    lens: z.enum(['agentique', 'data-web', 'produit']),
+    /** Fiche technique : clé / valeur, vérifiables dans le code du projet. */
+    specs: z.array(z.object({ label: z.string(), value: z.string() })).min(3),
+    /** Explications de fond pour ce public. */
+    deepDive: z.array(z.object({ title: z.string(), body: z.string() })).min(2),
     liveUrl: z.url().optional(),
     githubUrl: z.url().optional(),
   }),
